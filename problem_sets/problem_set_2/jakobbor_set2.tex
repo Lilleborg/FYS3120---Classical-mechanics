@@ -1,0 +1,429 @@
+\documentclass[11pt,a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%%%%%%%%%% Own packages
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{multicol}
+
+% Boxing
+\usepackage[most]{tcolorbox}
+\tcbset{enhanced}
+%\usepackage{capt-of}	% captions in boxes
+
+% Header/footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+
+% Listsings and items
+\usepackage{enumerate}
+\usepackage{varioref}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+% Maths
+\usepackage{physics}
+\usepackage{cancel}
+\usepackage{amstext,amsbsy,amssymb}
+\usepackage{times} 
+\usepackage{siunitx}
+
+%% Graphics
+\usepackage{caption}
+\captionsetup{margin=10pt,font=small,labelfont=bf}
+%\renewcommand{\thesubfigure}{(\alph{subfigure})} % Style: 1(a), 1(b)
+%\pagestyle{empty}
+\usepackage{graphicx}% Include figure files
+%\usepackage{epstopdf}
+%\usepackage{pdfsync}
+
+
+%% Numbered problems
+\newcounter{excount}[chapter]
+\newenvironment{exercise}[1][]{\addtocounter{excount}{1} \noindent {\bf Problem
+    \arabic{excount} \ \ #1}\hspace{2mm}}{\vspace{4mm}}
+
+%% Solution environment
+\newenvironment{solution}
+    {\begin{tcolorbox}[title=Solution,halign lower=right,breakable]
+    }
+    {
+    \tcblower Jakob Borg
+    \end{tcolorbox}
+	\vspace{5mm}
+    }
+
+%% Figure command
+\newcommand{\fig}[2][]
+{
+\begin{center}
+\includegraphics[width=0.49\linewidth]{#2}
+\captionof{figure}{#1}
+\label{fig:fig\arabic{figure}}
+\end{center}
+}
+
+%% Quic-half
+\newcommand{\half}
+{
+\frac{1}{2}
+}
+
+%% Quick center-of-mass
+\newcommand{\com}
+{
+\text{c.m.}
+}
+
+%% quad while
+\newcommand{\qwhile}
+{
+\qq{while}
+}
+
+%% Lagrangian's equation
+\newcommand{\Leq}[1]
+{
+\dv{t}\qty(\pdv{L}{\dot{#1}}) - \pdv{L}{#1}
+}
+
+%% Quick L pdv
+\newcommand{\Lpdv}[1]
+{
+\pdv{L}{#1}
+}
+
+%% Quick theta dot and phi dot
+\newcommand{\dtheta}
+{
+\dot{\theta}
+}
+\newcommand{\dphi}
+{
+\dot{\phi}
+}
+\newcommand{\ddtheta}
+{
+\ddot{\theta}
+}
+\newcommand{\ddphi}
+{
+\ddot{\phi}
+}
+
+%% Quick sin cos commands
+\newcommand{\cost}
+{
+\cos(\theta)
+}
+\newcommand{\sint}
+{
+\sin(\theta)
+}
+\newcommand{\cosp}
+{
+\cos(\phi)
+}
+\newcommand{\sinp}
+{
+\sin(\phi)
+}
+
+\title{FYS3120 Classical Mechanics and Electrodynamics\\ 
+\vspace{15mm}Problem set 2}
+\author{Jakob Borg}
+
+%%%%%%%
+\begin{document}
+%%%%%%%
+
+\maketitle
+
+%\lhead{Jakob Borg}
+\lhead{Problem set 2 FYS3120}
+\rhead{Jakobbor}
+%%%%%%%%
+
+%%%%%%%%
+\begin{exercise}
+Consider a general Lagrangian of the form $L=L(q_i,\dot q_i,t)$.
+
+\begin{itemize}
+\item[\bf a)] Explain the difference between the two types of time derivatives $\frac{dL}{dt}$ and $\frac{\partial L}{\partial t}$.
+\item[\bf b)] Assume $q(t)=\{q_1(t),q_2(t),\ldots,q_d(t)\}$ is a solution of Lagrange's equations
+\begin{equation}
+\frac{d}{dt}\left(\frac{\partial L}{\partial \dot q_i}\right)-\frac{\partial L}{\partial q_i}=0,\quad i=1,2,\ldots,d.
+\end{equation}
+Show that for this solution, the following equation will be satisfied
+\begin{equation}
+\frac{d}{dt}\left(L-\sum_i\frac{\partial L}{\partial \dot q_i}\dot q_i\right)=\frac{\partial}{\partial t}L.
+\end{equation}
+\end{itemize}
+
+\begin{solution}
+\begin{enumerate}[a)]
+	\item The $\dv{L}{t}$ is the total time derivative and is defined as
+	\begin{equation}
+	\dv{L}{t} =  \pdv{L}{t} + \sum_{j=1}^d \qty(\pdv{L}{\dot{q}_j}\ddot{q}_j+ \pdv{L}{q_j} \dot{q}_j)
+	\end{equation}
+	where $d$ is the number degrees of freedom, $\qty(2.93)$ in the book. This type of time derivative also includes contributions from time dependency of the generalized coordinates, their time derivatives and the explicit dependency of time.
+	
+	The $\pdv{L}{t}$ derivative is the partial time derivative, and is only with respect to the explicit time dependency of the Lagrangian.
+	
+	\item Pull the total time derivative inside the parenthesis and use the definition of total time derivative from a)
+	\begin{gather*}
+		\dv{L}{t} - \sum_i \qty[\dv{t}\qty(\pdv{L}{\dot{q}_i})\dot{q}_i + \pdv{L}{\dot{q}_i}\ddot{q}_i ]= \pdv{L}{t}
+		\\
+		\cancel{ \pdv{L}{t} } + \sum_i \qty[ \pdv{L}{\dot{q}_i}\ddot{q}_i + \pdv{L}{q_i}\dot{q}_i ] - \sum_i \qty[ \dv{t}\qty(\pdv{L}{\dot{q}_i})\dot{q}_i + \pdv{L}{\dot{q}_i}\ddot{q}_i ]= \cancel{\pdv{L}{t}}
+		\\
+		\sum_i \biggl[ \underbrace{\pdv{L}{\dot{q}_i}\ddot{q}_i - \pdv{L}{\dot{q}_i}\ddot{q}_i}_{=0} + \dot{q}_i \biggl( \underbrace{\dv{t} \qty(\pdv{L}{\dot{q}_i})-\pdv{L}{q_i} }_{=0} \biggr) \biggr] = 0
+	\end{gather*}
+	where I've used the fact that $q(t)$ is a solution of Lagrange's equations.
+\end{enumerate}
+\end{solution}
+\end{exercise}
+%%%%%%%
+
+
+%%%%%%%%
+\begin{exercise}
+Two identical rods of mass $m$ and length $l$ are connected to each other with a frictionless joint, see Fig.~\ref{fig:fig1}. The first rod is connected to a joint in the ceiling and to a joint at the center of the second rod. Assume that the motion takes place in the vertical plane. 
+As a reminder the moment of inertia of a rod (with even mass distribution) about an endpoint is $I_1=ml^2/3$ and about the midpoint is $I_2=ml^2/12$.
+
+\begin{itemize}
+\item[\bf a)] Choose suitable generalized coordinates for the system, and find the corresponding Lagrangian. 
+\item[\bf b)] Formulate Lagrange's equations for the system, and find the angular frequency for small oscillations of the upper rod about its equilibrium position.
+\end{itemize}
+
+\begin{solution}
+\fig[Two-rod problem.]{./figurer/{figurer.001}.png}
+\begin{enumerate}[a)]
+\item As the system moves in the vertical plane, I start out by describing the position of each rod's center-of-mass (c.m.) in Cartesian coordinates (coords). I have two constraints, the fixed length of the rods.
+\begin{align*}
+	\va{r}_1 &= x_1\vu{i} + y_1 \vu{j} \qwhile \abs{\va{r}_1} -\frac{l}{2} =0
+	\\
+	\va{r}_2 &= x_2\vu{i} + y_2 \vu{j} \qwhile \abs{\va{r}_2} - l =0
+\end{align*}
+resulting in $d = 2N-M = 4-2 = 2$ d.o.f. I choose the angles $\theta$ and $\phi$ as my generalized coordinates, $q = \qty{\theta, \phi}$, where $\phi$ is needed to describe the orientation of the second rod. I will orient the coordinates as polar coordinates around the joint in the ceiling.
+
+The Cartesian coordinates in terms of the generalized coordinates
+\begin{align*}
+	x_1 &= \frac{l}{2}\sin(\theta) \qc \dot{x}_1 = \frac{l}{2}\cos(\theta) \dot{\theta} & y_1 &= \frac{l}{2}\cos(\theta) \qc \dot{y}_1 = -\frac{l}{2}\sin(\theta)\dot{\theta}
+	\\
+	x_2 &= l\sin(\theta) \qc \dot{x}_2 = l\cos(\theta) \dot{\theta} & y_2 &= l\cos(\theta) \qc \dot{y}_2 = -l\sin(\theta) \dot{\theta}
+\end{align*}
+
+\subsubsection*{The Lagrangian}
+Three terms contributes to the kinetic energy. From rod 1 I get the rotational energy of a uniform rod around it's end point. Rod 2 contributes rotational energy as a normal pendulum of mass $m$, hanging in a mass-less string of length $l$, in addition to the rotational energy around it's \com. Let $I_p = ml^2$ be the moment of inertia for a point mass.
+\begin{multicols}{2}
+\begin{align*}
+	K &= \half I_1 \dot{\theta}^2 + \half I_p \dot{\theta}^2 + \half I_2 \dot{\phi}^2
+	\\
+	&= ml^2 \qty(\dot{\theta}^2\qty(\frac{1}{6} + \frac{1}{2}) + \frac{1}{24}\dot{\phi}^2)
+	\\
+	&=\underline{ ml^2\qty(\frac{2}{3}\dot{\theta}^2+ \frac{1}{24}\dot{\phi}^2)}
+	\\
+\end{align*}
+\par
+\begin{align*}
+	V &= -mgy_1 - mgy_2
+	\\
+	&= \underline{-mgl\frac{3}{2}\cos \theta}
+	\\
+\end{align*}
+\end{multicols}
+\begin{align*}
+	L &= K-V
+	\\
+	&= \underline{\underline{ml^2\qty(\frac{2}{3}\dot{\theta}^2+ \frac{1}{24}\dot{\phi}^2) + mgl\frac{3}{2}\cos \theta}}
+\end{align*}
+
+\item I write down each term in the equations for each coordinate
+\begin{gather*}
+	\dv{t} \qty( \pdv{L}{\dot{q}_i} ) - \pdv{L}{q_i} = 0 \qfor q_i \in q
+	\\
+	\dv{t} \qty( \pdv{L}{\dot{\theta}} ) = \dv{t} \qty( \frac{4}{3}ml^2\dot{\theta} ) = \frac{4}{3}ml^2\ddot{\theta}
+	\qc \pdv{L}{\theta} = -mgl\frac{3}{2}\sin \theta
+	\\
+	\dv{t}\qty( \pdv{L}{\dot{\phi}} ) =\dv{t} \qty( \frac{1}{12}ml^2 \dot{\phi} ) =  \frac{1}{12}ml^2 \ddot{\phi} \qc	\pdv{L}{\phi} = 0
+	\\
+	\qq{thus Lagrange's equations:}
+	\\
+\frac{1}{12}ml^2 \ddot{\phi} = 0 \qc \frac{4}{3}ml^2\ddot{\theta} + mgl\frac{3}{2}\sin \theta = 0
+\end{gather*}
+I've also found that $\phi$ is a cyclic coordinate.
+
+In the small angle approximation I can use $\sin \theta \approx \theta$. This gives
+\begin{multicols}{2}
+\begin{gather*}
+	\frac{4}{3}ml^2\ddot{\theta} + mgl\frac{3}{2}\theta = 0
+	\\
+	\ddot{\theta} = - \frac{9g}{8l}\theta
+\end{gather*}
+This is the harmonic oscillator, with angular frequency \[\omega = \sqrt{\frac{9g}{8l}}\]
+\end{multicols}
+\end{enumerate}
+\end{solution}
+\end{exercise}
+%%%%%%%
+
+
+%%%%%%%%
+\begin{exercise}
+A small body with mass $m$ moves without friction on a rod, see Fig.~\ref{fig:fig2}. The rod rotates in the horisontal plane, with constant angular velocity $\omega$ about a fixed point, which we assign the radial coordinate $r=0$. 
+
+\begin{itemize}
+\item[\bf a)] Find Lagrange's equation for the radial coordinate $r$, and show that, with the initial condition $\dot r=0$ and $r=r_0$ at $t=0$, the equation has the solution $r=r_0\cosh{\omega t}$.
+\item[\bf b)] Make a plot of the orbit in the horizontal $(x,y)$-plane, with dimensionless parameters $r_0=1$, $\omega=1$, and with $t$ restricted by $\omega t \lesssim \pi$. 
+\end{itemize}
+
+\begin{solution}
+\fig[Rotating rod. $4$]{./figurer/{figurer.002}.png}
+\begin{enumerate}[a)]
+\item With no gravitational field it's no potential energy, so the Lagrangian is only the kinetic energy of the system. I will treat the box as a point mass, and assume the rod to be mass-less and infinitely long. As the rod rotates with constant angular velocity, I only need a single coordinate $r = r(t)$ to describe the position of the box. 
+\begin{gather*}
+L = \half I_p \dot{\theta} + \half m \dot{r}^2 = \half m \qty( r^2 \omega^2 + \dot{r}^2 )
+\\
+\Leq{r} = 0
+\\
+\pdv{L}{\dot{r}} = m \dot{r} \eval \cdot \dv{t} \Rightarrow m \ddot{r} \qc \pdv{L}{r} = m \omega^2 r
+\\
+\qq{thus:}
+\\
+\ddot{r} - \omega^2 r = 0
+\\
+\qq{which is the harmonic oscillator, with solution:}
+\\
+r(t) = A\cosh(\omega t) + B\sinh(\omega t)
+\\
+\qq*{Using the initial conditions:}
+\\
+r(0) = r_0 \Rightarrow A = r_0 \qc \dot{r}(0) = 0 \Rightarrow B = 0
+\\
+r(t) = r_0 \cosh(\omega t)
+\end{gather*}
+\item Plot in Fig. \ref{fig:fig3} with dimensionless parameters set to one, initial conditions from a) and time $t \in [0,\pi)$.
+\fig[Orbiting rod, $t \in [0 , \pi)$.]{./figurer/orbit_rod.png}
+\end{enumerate}
+\end{solution}
+\end{exercise}
+%%%%%%%
+
+
+%%%%%%%%
+\begin{exercise}
+A pendulum consists of a rigid rod, which we consider as massless, and a pendulum bob of mass $m$. The point of suspension of the pendulum has horizontal coordinate $x=s$ and vertical coordinate $y=0$. This set-up is shown in Fig.~\ref{fig:fig4}.
+
+\begin{itemize}
+\item[\bf a)] Assume first that the point of suspension is kept fixed, with $s=0$. Use the angle $\theta$ as generalized coordinate, find the Lagrangian of the system and determine the form of Lagrange's equation for the system. Check that it has the standard form of a pendulum equation. 
+\item[\bf b)] The point of suspension is now released so it can move freely in the horizontal direction ($x$-direction). Use $s$ and $\theta$ as generalized coordinates for the system and determine the corresponding set of Lagrange's equations. 
+\item[\bf c)] Show that $s$ can be eliminated to give an equation which only depends on $\theta$ and its derivatives. Further show that this equation implies that the vertical motion of the pendulum bob is  identical to free fall in the gravitational field (in reality restricted by the length $l$ of the rod). 
+\end{itemize}
+
+\begin{solution}
+\fig[Pendulum with free moving attachment point.]{./figurer/{figurer.003}.png}
+\begin{enumerate}[a)]
+\item This first case, is just the normal pendulum problem. Contributing to the energies are the rotational energy of a point mass, and the point mass in the gravitational field. With s fixed $q = \theta$.
+\begin{gather*}
+	K = \half I_p \dot{\theta}^2 = \half m l^2 \dot{\theta}^2	\qc V = -mgy = -mgl\cos(\theta)
+	\\
+	L= ml \qty(\half l \dot{\theta}^2 + g\cos(\theta))
+	\qc
+	\Leq{\theta} = 0
+	\\
+	\dv{t}\qty(\pdv{L}{\dot{\theta}}) = \dv{t}\qty(ml^2 \dot{\theta}) = ml^2\ddot{\theta}
+	\qc
+	\pdv{L}{\theta} = -mgl \sin(\theta)
+	\\
+	\qq*{giving the standard pendulum equation:}	\ddot{\theta} + \frac{g}{l} \sin(\theta) = 0
+\end{gather*}
+
+\item Introducing horizontal movement gives translational energy to the bob, but doesn't change the potential energy. To express the kinetic energy now I use the Cartesian coordinates
+\begin{gather*}
+	x = l\sin(\theta) + s \qc  \dot{x} = l\cos(\theta)\dot{\theta} + \dot{s}
+	\\
+	y = l \cos(\theta) \qc  \dot{y} = -l\sin(\theta) \dot{\theta}
+	\\
+	\qq*{so:}  v^2 = l^2\cos[2](\theta)\dtheta^2 + 2l\cos(\theta)\dtheta\dot{s}+\dot{s}^2 + l^2 \sin[2](\theta)\dtheta^2
+	\\
+	v^2 = l^2\dtheta^2 + 2l\cos(\theta)\dtheta \dot{s}+ \dot{s}^2
+	\\
+	K = \half mv^2 = \half m \qty(l^2\dtheta^2 + 2l\cos(\theta)\dtheta \dot{s}+ \dot{s}^2) \qc V = -mgl\cos(\theta)
+	\\
+	L = \half m \qty( l^2	\dot{\theta}^2 + 2l\cos(\theta)\dtheta \dot{s} + \dot{s}^2 ) + mgl \cos(\theta)
+\end{gather*}
+Here I note that there are no dependency on the coordinate $s$ in the Lagrangian, only $\dot{s}$. This indicates that $s$ is a cyclic variable, which I will use further in c)
+\begin{gather*}
+\Lpdv{s} = 0 
+\\
+\dv{t}\qty(\Lpdv{\dot{s}}) = \dv{t}\qty( ml\cos(\theta)\dtheta + m\dot{s} ) =  0
+\\
+\qq*{e.o.m.} \underline{m\ddot{s} + ml \cos(\theta) \ddot{\theta} - ml \sin(\theta) \dtheta^2 = 0}
+\end{gather*}
+For $\theta$
+\begin{gather}
+\dv{t}\qty( \Lpdv{\dtheta} ) = \dv{t} \qty( ml^2 \dtheta + ml\cos(\theta) \dot{s} ) = ml^2\ddot{\theta} + ml\cos(\theta) \ddot{s} - ml \sin(\theta)\dtheta \dot{s} \notag
+\\
+\Lpdv{\theta} = -ml\sin(\theta)\dtheta \dot{s} -mgl\sin(\theta) \notag
+\\
+\qq*{e.o.m.}  \Leq{\theta} = \underline{ml^2\ddot{\theta} + ml\cos(\theta)\ddot{s} + mgl \sin(\theta) = 0} \label{eq:eomtheta}
+\end{gather}
+
+\item As I've shown $s$ to be a cyclic coordinate, it can be eliminated. Let $p_s \equiv \Lpdv{\dot{s}} = m\dot{s}$ be the conjugate momentum. I can then find an expression for $\ddot{s}$ in \cref{eq:eomtheta}.
+\begin{gather}
+p_s = \Lpdv{\dot{s}} = ml\cos(\theta)\dtheta + m\dot{s} \quad \Rightarrow \quad \dot{s} = \frac{p_s}{m}- l\cos(\theta)\dtheta \qc \ddot{s} = l\sin(\theta)\dtheta^2 -l\cos(\theta)\ddot{\theta}\notag
+\\
+\Rightarrow \quad  ml^2\ddot{\theta} + ml\cos(\theta)\qty(l\sint \dtheta^2 - l \cost \ddtheta) + mgl\sint = 0\notag
+\\
+ml^2 \ddtheta \qty(1-\cos[2](\theta))+  ml^2 \cost \sint \dtheta^2 + mgl \sint = 0\notag
+\\
+\ddtheta\sin[2](\theta) + \cost \sint \dtheta^2 + \frac{g}{l}\sint = 0 \quad \eval \cdot \frac{1}{\sin[2](\theta)}\notag
+\\
+\ddtheta + \cot(\theta) \dtheta^2 + \frac{g}{l\sint} = 0 \label{eq:eom_theta_only}
+\end{gather}
+To show that \cref{eq:eom_theta_only} implies free fall I need to show that $\ddot{y} = -g$. I have already found $\dot{y}$ in b), so
+\begin{gather*}
+\qq*{demand equality:}\ddot{y} = -l\cost \dtheta^2 - l\sint \ddtheta \overset{!}{=} -g
+\\
+\Rightarrow \ddtheta \sint + \cost \dtheta^2 + \frac{g}{l} = 0
+\\
+\qq*{which returns:} \ddtheta + \cot(\theta)\dtheta^2 + \frac{g}{l\sint} = 0
+\end{gather*}
+by demanding $\ddot{y} = -g$ I can find back to \cref{eq:eom_theta_only}, which implies that the y-component, that is the vertical motion, is identical to free fall. (Restricted by the length of the rod).
+\end{enumerate}
+
+\paragraph*{I have also tried} another approach to the problem, which I find more intuitive and direct, but I'm not sure how this approach would be viable in this situation. Instead of the hassle with Cartesian coordinates, I want to split the motion of the pendulum in two kinetic energy contributions; one rotational and one translational. This is the same approach as I did in problem 3. First I thought I could let the translational velocity be simply $v_t = \dot{s}$, but this gives \textbf{incorrect} results. My best explanation for this is that the velocity in this case is not as easy to decompose as the rotational and translational part are not orthogonal. I should get some cross terms of the two coordinates $s$ and $\theta$ which is not present in the following. I've still included it here as I would really like to be certain why this approach isn't viable in this situation.
+\begin{align*}
+	L &= \half I_p \dtheta^2 + \half m v_t^2 + mgl\cos(\theta)
+	\\
+	&= \half ml^2 \dtheta^2 + \half m \dot{s}^2 + mgl \cos(\theta)
+\end{align*}
+
+\begin{align*}
+	\Leq{s} &= 0 
+	%	
+	& \Leq{\theta} &=0
+	\\
+	\dv{t}\qty( \Lpdv{\dot{s}} ) = \dv{t} \qty(m\dot{s} ) &= m\ddot{s}	
+	% 
+	 &
+	 \dv{t} \qty( \Lpdv{\dot{\theta}} ) = \dv{t} \qty( ml^2 \dot{\theta} ) &= ml^2 \ddot{\theta}
+	\\	 
+	\qq*{cyclic coord:} \Lpdv{s} &= 0 
+	%
+	& \Lpdv{\theta} &= -mgl \sin(\theta)
+	\\
+	\Rightarrow m\ddot{s} &= 0 
+	%
+	& \Rightarrow \ddot{\theta} + \frac{g}{l} \sin(\theta) &=0
+\end{align*}
+This seems more like a solution of a system where the attachment point moves with a constant velocity.
+\end{solution}
+\end{exercise}
+%%%%%%%
+
+
+\end{document}
+%%%%%%%%%%

@@ -1,0 +1,368 @@
+\documentclass[11pt,a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%%%%%%%%%% Own packages
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{multicol}
+
+% Boxing
+\usepackage[most]{tcolorbox}
+\tcbset{enhanced}
+%\usepackage{capt-of}	% captions in boxes
+
+% Header/footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+
+% Listsings and items
+\usepackage[shortlabels]{enumitem}
+\setenumerate{wide,labelwidth=!, labelindent=0pt}
+\usepackage{varioref}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+% Maths
+\usepackage{physics}
+\usepackage{cancel}
+\usepackage{amstext,amsbsy,amssymb}
+\usepackage{times} 
+\usepackage{siunitx}
+
+%% Graphics
+\usepackage{caption}
+\captionsetup{margin=10pt,font=small,labelfont=bf}
+%\renewcommand{\thesubfigure}{(\alph{subfigure})} % Style: 1(a), 1(b)
+%\pagestyle{empty}
+\usepackage{graphicx}% Include figure files
+%\usepackage{epstopdf}
+%\usepackage{pdfsync}
+
+
+%% Numbered problems
+\newcounter{excount}[chapter]
+\newenvironment{exercise}[1][]{\addtocounter{excount}{1} \noindent {\bf Problem
+    \arabic{excount} \ \ #1}\hspace{2mm}}{\vspace{4mm}}
+
+%% Solution environment
+\newenvironment{solution}
+    {\begin{tcolorbox}[title=Solution,halign lower=right,breakable]
+    }
+    {
+    \tcblower Jakob Borg
+    \end{tcolorbox}
+	\vspace{5mm}
+    }
+
+%% Figure command
+\newcommand{\fig}[2][]
+{
+\begin{center}
+\includegraphics[width=0.49\linewidth]{#2}
+\captionof{figure}{#1}
+\label{fig:fig\arabic{figure}}
+\end{center}
+}
+
+%% Quic-half
+\newcommand{\half}
+{
+\frac{1}{2}
+}
+
+%% Quick center-of-mass
+\newcommand{\com}
+{
+\text{c.m.}
+}
+
+%% quad while
+\newcommand{\qwhile}
+{
+\qq{while}
+}
+
+%% quad where
+\newcommand{\qwhere}
+{
+\qq{where}
+}
+
+%% Lagrangian's equation
+\newcommand{\Leq}[1]
+{
+\dv{t}\qty(\pdv{L}{\dot{#1}}) - \pdv{L}{#1}
+}
+
+%% Quick L and H pdv
+\newcommand{\Lpdv}[1]
+{
+\pdv{L}{#1}
+}
+\newcommand{\Hpdv}[1]
+{
+\pdv{H}{#1}
+}
+
+%% Time derivative of Lpdv
+\newcommand{\dvtLpdv}[1]
+{
+\dv{t} \qty(\Lpdv{#1}) 
+}
+
+%% Time derivative of argument
+\newcommand{\dvt}[1]
+{
+\dv{t} \qty(#1)
+}
+
+%% Quick theta dot and phi dot
+\newcommand{\dtheta}
+{
+\dot{\theta}
+}
+\newcommand{\dphi}
+{
+\dot{\phi}
+}
+\newcommand{\ddtheta}
+{
+\ddot{\theta}
+}
+\newcommand{\ddphi}
+{
+\ddot{\phi}
+}
+
+%% Quick dot vector
+\newcommand{\dotva}[1]
+{
+\dot{\va{#1}}
+}
+\newcommand{\ddotva}[1]
+{
+\ddot{\va{#1}}
+}
+
+%% Quick sin cos of theta and phi commands
+\newcommand{\cost}
+{
+\cos(\theta)
+}
+\newcommand{\sint}
+{
+\sin(\theta)
+}
+\newcommand{\cosp}
+{
+\cos(\phi)
+}
+\newcommand{\sinp}
+{
+\sin(\phi)
+}
+
+\title{FYS3120 Classical Mechanics and Electrodynamics\\ 
+\vspace{15mm}Problem set 4}
+\author{Jakob Borg}
+%%%%%%%
+\begin{document}
+%%%%%%%
+
+\maketitle
+
+%\lhead{Jakob Borg}
+\lhead{Problem set 4 FYS3120}
+\rhead{Jakobbor}
+%%%%%%%%
+
+\fig[Constrained rod]{./figurer/{figurer.001}.png}
+\begin{multicols}{2}
+
+\begin{exercise}
+\begin{enumerate}[\bf a)]
+\item Consider the center-of-mass (cm.) of the rod, it will be at the middle of the rod as the mass is uniform. Let 
+\begin{equation*}
+x = b\sint \quad y = b \cost
+\end{equation*}
+be coordinates of the end points of the rod. I can then express the position of the cm. as
+\[ \va{R} = \half \qty(x+ y).\]
+The Lagrangian can be expressed using the kinetic and potential energy of the cm., plus the rotational energy of the rod around the cm. with moment of inertia $I_{midle} = \frac{1}{12}mb^2$.
+\[L = K_{cm} + K_{rot} - V_{cm}\]
+where I find
+\begin{gather*}
+K_{cm} = \half m\dot{\va{R}}^2 = \half m \frac{1}{4}\qty(\dot{x}^2 + \dot{y}^2)
+\\
+= \frac{1}{8}m \qty(b^2\cos[2](\theta)\dtheta^2 + b^2\sin[2](\theta)\dtheta)
+\\
+= \frac{1}{8}mb^2\dtheta^2
+\\
+K_{rot} = \half I_{midle} \dtheta^2 = \frac{1}{24}mb^2\dtheta^2
+\\
+V_{cm} = -mg\frac{y}{2} = -\frac{mg}{2}b\cost
+\end{gather*}
+giving the Lagrangian
+\begin{gather}
+L =  \frac{1}{8}mb^2\dtheta^2 + \frac{1}{24}mb^2\dtheta^2 + \frac{mg}{2}b\cost \notag
+\\
+L = \frac{1}{6}mb^2\dtheta^2 +\frac{mg}{2}b\cost.\label{eq:L1}
+\end{gather}
+Using Lagrange's equation \[\Leq{\theta} = 0\]
+where I find
+\begin{gather*}
+\dvtLpdv{\dtheta} = \dvt{\frac{2}{6}mb^2\dtheta} = \frac{1}{3}mb^2\ddtheta
+\\
+\Lpdv{\theta} = -\frac{mg}{2}b\cost
+\end{gather*}
+results in
+\begin{gather}
+\frac{1}{3}mb^2 \ddtheta + \frac{mg}{2}b\cost = 0 \notag
+\\
+\ddtheta + \frac{3g}{2b}\sint = 0 \label{eq:eom1}
+\end{gather}
+which I wanted to show.
+
+\item Intuitively I can say that the stable equilibrium point is at $\theta_0 = 0$, which also can be found by finding the minima of the potential
+\[ \pdv{V}{\theta} = 0 \qq{at} \sint = 0 \qq{so} \theta_0 = 0\]
+Let $\phi = \theta - \theta_0 = \theta$ be a small oscillation around the equilibrium, using the small angle approximation $\sinp \approx \phi$ on \cref{eq:eom1} gives
+\begin{equation}
+\ddphi + \frac{3g}{2b}\phi = 0.
+\end{equation}
+This is the harmonic oscillator with frequency 
+\begin{equation}
+\omega_0 = \sqrt{\frac{3g}{2b}}.
+\end{equation}
+The period is related to the frequency by
+\[T = \frac{2\pi}{\omega}\]
+so that the period of small oscillations is
+\begin{equation}
+T_0 = \frac{2\pi}{\omega_0} = 2\pi \sqrt{\frac{2b}{3g}}. \label{eq:Period}
+\end{equation}
+
+\item As there are no explicit time dependency, I know that the Hamiltonian is a constant of motion from the relation
+\[\dv{H}{t} = -\pdv{L}{t} = 0 \Rightarrow H = \text{constant}\]
+We know that the physical interpretation of the Hamiltonian is the amount of energy in the system. This means the energy is conserved, which makes sense as there are no friction or other sources for energy loss. I find the expression for the Hamiltonian using the definition with only one generalized coordinate (so the sum disappears) and \cref{eq:L1}
+\begin{gather}
+H = \Lpdv{\dtheta}\dtheta -L \qwhere \Lpdv{\dtheta} = \frac{2}{6}mb^2\dtheta \notag
+\\
+\Rightarrow H = \frac{2}{6}mb^2\dtheta^2 -\qty(\frac{1}{6}mb^2\dtheta^2 +\frac{mg}{2}b\cost) \notag
+\\
+= \frac{1}{6}mb^2\dtheta^2 - \frac{mg}{2}b\cost \label{eq:H1}
+\end{gather}
+which makes sense as the sum of the kinetic and potential energies. This expression, that is the Hamiltonian, is related to the equation of motion through Hamilton's equations
+\begin{gather}
+\dtheta = \Hpdv{p} \qand \dot{p}_\theta = -\Hpdv{\theta} \label{eq:Hamiltons}
+\end{gather}
+where $p_\theta$ is the generalized momentum defined by \[p_\theta = \Lpdv{\theta}.\]
+As there are only one generalized coordinate I will skip the subscript on the generalized momentum. Using the definition I find an expression for $\dtheta$ in \cref{eq:H1}
+\[p = \frac{1}{3}mb^2\dtheta \Rightarrow \dtheta = \frac{3p}{mb^2} \]
+which gives \[ H = \frac{3p^2}{2mb^2} -\frac{mg}{2}b\cost.\]
+Using \cref{eq:Hamiltons} I find
+\begin{gather*}
+\dot{p} = - \Hpdv{\theta} = -\half mgb\sint
+\\
+\dtheta = \Hpdv{p} = \frac{3p}{mb^2} \eval \cdot \dv{t}
+\\
+\ddtheta = \frac{3\dot{p}}{mb^2} = \frac{3}{mb^2}\qty(-\half mgb\sint)
+\\
+\Rightarrow \ddtheta + \frac{3g}{2b}\sint = 0
+\end{gather*}
+same as \cref{eq:eom1}.
+
+\item Here I use the fact that the Hamiltonian is a constant of motion, so it has to be the same at all angles $-\theta_0<\theta < \theta_0$. Also, as $\theta_0$ is the max displacement the velocity is zero at this point, $\dtheta_0 = 0$.
+\begin{gather*}
+H(\theta) = H(\theta_0)
+\\
+\frac{1}{6}mb^2\dtheta^2 - \half mgb\cost = -\half mgb\cos(\theta_0) 
+\\
+\dtheta^2 =2 \underbrace{\frac{3g}{2b}}_{\omega^2}\qty(\cost - \cos(\theta_0))
+\\
+\dv{\theta}{t} = \sqrt{2}\omega \sqrt{\cost -\cos(\theta_0)}
+\end{gather*}
+this is a separable differential equation. Here I also use \cref{eq:Period} to express $\omega$ in terms of $T_0$. I have to mind what my integration limits are. As I want to integrate from $0$ to $\theta_0$, I integrate the time from $t=0$ to $t = T/4$ as the path from equilibrium to $\theta_0$ is one quarter or a period.
+\begin{gather*}
+\frac{T_0}{2\sqrt{2}\pi} \int_0^{\theta_0} \frac{\dd{\theta}}{\sqrt{\cost-\cos(\theta_0)}} = \int_0^{T/4} \dd{t} = \frac{T}{4}
+\\
+\Rightarrow T = T_0 \frac{\sqrt{2}}{\pi}\int_0^{\theta_0} \frac{\dd{\theta}}{\sqrt{\cost-\cos(\theta_0)}}
+\end{gather*}
+To evaluate the ratio $T/T_0$ for $\theta_0 = \pi/2$, note that the second term in the denominator is zero $\cos(\theta_0) = 0$. I can then use equation 103 on page 160 in Rottmann
+\[\int_0^{\pi/2} \sin[m](x)\cos[n](x)\dd{x} = \frac{\Gamma(\frac{m+1}{2})\Gamma(\frac{n+1}{2})}{2\Gamma(\frac{m+n+2}{2})}\]
+with $m=0$ and $n=-1/2$. I then find the integrand to be
+\begin{gather*}
+\int_0^{\pi/2} \frac{\dd{\theta}}{\sqrt{\cost}} = \frac{\Gamma(\frac{1}{2})\Gamma(\frac{1}{4})}{2\Gamma(\frac{3}{4})} = \frac{\sqrt{\pi}}{2} \frac{\Gamma(\frac{1}{4})}{\Gamma(\frac{3}{4})}
+\\
+\qq*{I find numerically:}  \frac{\Gamma(\frac{1}{4})}{\Gamma(\frac{3}{4})} \approx 2.95867512
+\end{gather*}
+Giving the ratio
+\[\frac{T}{T_0} = \frac{1}{\sqrt{2\pi}}  \frac{\Gamma(\frac{1}{4})}{\Gamma(\frac{3}{4})} \approx 1.18\]
+\end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+\begin{enumerate}[\bf a)]
+\item If the potential is only dependent on the distance between the two masses, I find the Lagrangian easily as the kinetic energies of the two masses minus the potential
+\begin{equation}
+L = \half m_1 \dot{\va{r}}_1 + \half m_2 \dot{\va{r}}_2 - V(\abs{\va{r}_1-\va{r}_2})\label{eq:L2}
+\end{equation}
+
+\item To make the change of variables I need to express the coordinates $\va{r}_1$ and $\va{r}_2$ in terms of the new variables 
+\begin{gather*}
+\va{r} = \va{r}_1-\va{r}_2 \qc \abs{\va{r}} = r = \abs{\va{r}_2-\va{r}_2}
+\\
+\va{R} = \frac{m_1}{m_1+m_2}\va{r}_1 + \frac{m_2}{m_1+m_2}\va{r}_2.
+\end{gather*}
+I solve these equations for the two original coordinates separately
+\begin{gather*}
+\frac{m_1}{m_1+m_2}\va{r}_1 = \va{R} -\frac{m_2}{m_1+m_2}\va{r}_2
+\\
+\va{r}_1 = \frac{m_1+m_2}{m_1}\va{R} -\frac{m_2}{m_1}\qty(\va{r}_1-\va{r})
+\\
+\va{r}_1\frac{1}{m_1}(m_1+m_2) = \frac{m_1+m_2}{m_1}\va{R} + \frac{m_2}{m_1}\va{r}
+\\
+\va{r}_1 = \va{R} + \frac{m_2}{m_1+m_2}\va{r}
+\end{gather*}
+Similarly for $\va{r}_2$ gives
+\[\va{r}_2 = \va{R} - \frac{m_1}{m_1+m_2}\va{r}\]
+I use these expressions in \cref{eq:L2} to get
+\begin{small}
+\begin{align*}
+L =& \half m_1 \qty(\dot{\va{R}}^2 + \cancel{2 \frac{m_2}{m_1+m_2}\dot{\va{R}}\dot{\va{r}} }+ \qty(\frac{m_2}{m_1+m_2})^2\dot{\va{r}}^2)
+\\
++& \half m_2\qty(\dot{\va{R}}^2 - \cancel{2 \frac{m_1}{m_1+m_2}\dot{\va{R}}\dot{\va{r}}} + \qty(\frac{m_1}{m_1+m_2})^2\dot{\va{r}}^2)
+\\
+-& V(r)
+\\
+=& \half(m_1+m_2)\dot{\va{R}}^2 + \half \frac{m_1m_2}{m_1+m_2}\qty(\frac{m_2}{m_1+m_2})\dot{\va{r}}^2 
+\\
+&+ \half \frac{m_1m_2}{m_1+m_2}\qty(\frac{m_1}{m_1+m_2})\dot{\va{r}}^2  -V(r)
+\\
+=& \half(m_1+m_2)\dot{\va{R}}^2 + \half \mu \dot{\va{r}}^2 -V(r)
+\end{align*} \end{small}
+\item I find Lagrange's equations for the two coordinates, first for $\va{r}$
+\begin{gather*}
+\dvtLpdv{\dot{\va{r}}} = \mu \ddotva{r} \qc \Lpdv{\va{r}} = -\pdv{V}{r}
+\\
+\Rightarrow \mu \ddotva{r} + \pdv{V}{r} = 0
+\end{gather*}
+which may be solved given an expression for the potential. I interpret the problem text so that I am not to solve for this coordinate. For $\va{R}$ I get
+\begin{gather*}
+\dvtLpdv{\dotva{R}} = (m_1+m_2) \ddotva{R} \qc \Lpdv{\va{R}} = 0 \qq{cyclic!}
+\\
+\Rightarrow (m_1+m_2) \ddotva{R} = 0 \qand (m_1+m_2) \dotva{R} = p_R
+\end{gather*}
+where $p_R$ is the generalized momentum, which is a constant as $\va{R}$ is a cyclic coordinate. The general solution for this coordinate is then
+\[ 
+\va{R} = \frac{p_R}{m_1+m_2}t + R_0
+\]
+where $R_0$ is some initial condition.
+
+\item I interpret these new coordinates as the position vector of the center of mass, $\va{R}$, and the relative position vector between the two bodies, $\va{r}$. The relative position vector gives both information of the orientation of the bodies in the orbit, e.i. the angular displacement from some zero point, and the distance between the two. This is all we need to describe the motion governed by the potential $V(r)$. As I have shown the center of mass position is a cyclic coordinate, moving with constant velocity. This makes sense as the 2-body problem, similar to the solar system where each planet orbits around the common center of mass, where each bodies motion is solely governed by the gravitational potential in the system, while the center of mass moves through the galaxy.
+
+The change of variables in the Lagrangian reveals the cyclic coordinate $\va{R}$, which reduces the degrees of freedom by one. This reduces the amount of coordinates from two, $\va{r}_1$ and $\va{r}_2$, to one coordinate which connects the two bodies.
+\end{enumerate}
+\end{exercise}
+
+\end{multicols}
+\end{document}
