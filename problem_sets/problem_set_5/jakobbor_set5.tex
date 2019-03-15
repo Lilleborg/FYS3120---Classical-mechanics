@@ -1,0 +1,481 @@
+\documentclass[11pt,a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%%%%%%%%%% Own packages
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{multicol}
+
+% Boxing
+\usepackage[most]{tcolorbox}
+\tcbset{enhanced}
+%\usepackage{capt-of}	% captions in boxes
+
+% Header/footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+
+% Listsings and items
+\usepackage[shortlabels]{enumitem}
+\setenumerate{wide,labelwidth=!, labelindent=0pt}
+\usepackage{varioref}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+% Maths
+\usepackage{physics}
+\usepackage{cancel}
+\usepackage{amstext,amsbsy,amssymb}
+\usepackage{times} 
+\usepackage{siunitx}
+
+%% Graphics
+\usepackage{caption}
+\captionsetup{margin=10pt,font=small,labelfont=bf}
+%\renewcommand{\thesubfigure}{(\alph{subfigure})} % Style: 1(a), 1(b)
+%\pagestyle{empty}
+\usepackage{graphicx}% Include figure files
+%\usepackage{epstopdf}
+%\usepackage{pdfsync}
+
+
+%% Numbered problems
+\newcounter{excount}[chapter]
+\newenvironment{exercise}[1][]{\addtocounter{excount}{1} \noindent {\bf Problem
+    \arabic{excount} \ \ #1}\hspace{2mm}}{\vspace{4mm}}
+
+%% Solution environment
+\newenvironment{solution}
+    {\begin{tcolorbox}[title=Solution,halign lower=right,breakable]
+    }
+    {
+    \tcblower Jakob Borg
+    \end{tcolorbox}
+	\vspace{5mm}
+    }
+
+%% Figure command
+\newcommand{\fig}[2][]
+{
+\begin{center}
+\includegraphics[width=0.49\linewidth]{#2}
+\captionof{figure}{#1}
+\label{fig:fig\arabic{figure}}
+\end{center}
+}
+
+%% Quic-half
+\newcommand{\half}
+{
+\frac{1}{2}
+}
+
+%% Quick center-of-mass
+\newcommand{\com}
+{
+\text{c.m.}
+}
+
+%% quad while
+\newcommand{\qwhile}
+{
+\qq{while}
+}
+
+%% quad where
+\newcommand{\qwhere}
+{
+\qq{where}
+}
+
+%% Lagrangian's equation
+\newcommand{\Leq}[1]
+{
+\dv{t}\qty(\pdv{L}{\dot{#1}}) - \pdv{L}{#1}
+}
+
+%% Quick L and H pdv
+\newcommand{\Lpdv}[1]
+{
+\pdv{L}{#1}
+}
+\newcommand{\Hpdv}[1]
+{
+\pdv{H}{#1}
+}
+
+%% Time derivative of Lpdv
+\newcommand{\dvtLpdv}[1]
+{
+\dv{t} \qty(\Lpdv{#1}) 
+}
+
+%% Time derivative of argument
+\newcommand{\dvt}[1]
+{
+\dv{t} \qty(#1)
+}
+
+%% Quick theta dot and phi dot
+\newcommand{\dtheta}
+{
+\dot{\theta}
+}
+\newcommand{\dphi}
+{
+\dot{\phi}
+}
+\newcommand{\ddtheta}
+{
+\ddot{\theta}
+}
+\newcommand{\ddphi}
+{
+\ddot{\phi}
+}
+
+%% Quick dot vector
+\newcommand{\dotva}[1]
+{
+\dot{\va{#1}}
+}
+\newcommand{\ddotva}[1]
+{
+\ddot{\va{#1}}
+}
+
+%% Quick sin cos of theta and phi commands
+\newcommand{\cost}
+{
+\cos(\theta)
+}
+\newcommand{\sint}
+{
+\sin(\theta)
+}
+\newcommand{\coscost}
+{
+\cos[2](\theta)
+}
+\newcommand{\sinsint}
+{
+\sin[2](\theta)
+}
+\newcommand{\cosp}
+{
+\cos(\phi)
+}
+\newcommand{\sinp}
+{
+\sin(\phi)
+}
+
+%% Quick sin cos of omega t
+\newcommand{\coswt}
+{
+\cos(\omega t)
+}
+\newcommand{\sinwt}
+{
+\sin(\omega t)
+}
+\newcommand{\coscoswt}
+{
+\cos^2(\omega t)
+}
+\newcommand{\sinsinwt}
+{
+\sin^2(\omega t)
+}
+
+\title{FYS3120 Classical Mechanics and Electrodynamics\\ 
+\vspace{15mm}Problem set 5}
+\author{Jakob Borg}
+%%%%%%%
+\begin{document}
+%%%%%%%
+
+\maketitle
+
+%\lhead{Jakob Borg}
+\lhead{Problem set 5 FYS3120}
+\rhead{Jakobbor}
+%%%%%%%%
+
+%%%%%%%%
+\begin{exercise}
+A particle with mass $m$ moves freely on a horizontal plane. There are no constraints on the motion, but in the following we will consider the free motion described in a rotating reference frame. We refer to the Cartesian coordinates of a fixed frame as $(x,y)$ and the coordinates of the rotating frame as $(\xi,\eta$). They are related by the standard expressions
+\begin{eqnarray}
+&&x=\xi\cos\omega t-\eta\sin\omega t, \\
+&&y=\xi\sin\omega t+\eta\cos\omega t,
+\end{eqnarray}
+where $\omega$ is the angular velocity of the rotation.
+
+\begin{itemize}
+\item[\bf a)] Find the Lagrangian expressed in terms of the coordinates $(\xi,\eta)$ and their time derivatives.
+\item[\bf b)] Find the corresponding equations of motion for the two variables, and identify the Coriolis and centrifugal terms.
+Compare with the standard expression for Newton's second law in a rotating reference frame, as can be found in introductory mechanics text books.
+\end{itemize}
+\begin{solution}
+\begin{enumerate}[\bf a)]
+\item As the mass moves in the horizontal plane, whether acted on by gravity or not, I can set the zero-potential in the plane. For the Lagrangian I then only have kinetic energy
+\begin{gather*}
+L = \half m \qty(\dot{x}^2 + \dot{y}^2)
+\end{gather*}
+where I find the coordinates
+\begin{multicols}{2}
+\small
+\noindent
+\begin{align*}
+\dot{x}^2 =& \qty[\qty(\dot{\xi} -\eta \omega) \coswt - \qty(\xi\omega+\dot{\eta}) \sinwt]^2
+\\
+=& \coscoswt \qty(\dot{\xi}-\eta\omega)^2 + \sinsinwt\qty(\xi\omega + \dot{\eta})^2 
+\\
+&-2\coswt\sinwt \qty(\dot{\xi} -\eta \omega) \qty(\xi\omega+\dot{\eta})
+\end{align*}
+\begin{align*}
+\dot{y}^2 =& \qty[ \qty(\dot{\xi} -\eta \omega) \sinwt + \qty(\xi\omega+\dot{\eta}) \coswt ]^2
+\\
+=&  \sinsinwt\qty(\dot{\xi}-\eta\omega)^2 +\coscoswt \qty(\xi\omega + \dot{\eta})^2 
+\\
+&+2\coswt\sinwt \qty(\dot{\xi} -\eta \omega) \qty(\xi\omega+\dot{\eta})
+\end{align*}
+\end{multicols}
+resulting in a Lagrangian
+\begin{gather*}
+L = \half m \qty( \coscoswt \qty(\dot{\xi}-\eta\omega)^2 + \sinsinwt\qty(\xi\omega + \dot{\eta})^2 +  \sinsinwt\qty(\dot{\xi}-\eta\omega)^2 +\coscoswt \qty(\xi\omega + \dot{\eta})^2 )
+\\
+= \half m \qty( \qty(\dot{\xi}-\eta\omega)^2 +(\xi\omega + \dot{\eta})^2 )
+\\
+L = \half m \qty( \dot{\xi}^2 - 2 \dot{\xi}\eta\omega + \omega^2 \qty(\eta^2 + \xi^2) + \dot{\eta}^2 + 2\xi\omega\dot{\eta})
+\end{gather*}
+\item I assume the angular velocity of the rotating frame to be constant, so $\dot{\omega}=0$. Using Lagrange's equation on each of the coordinates
+\begin{multicols}{2}
+\noindent
+\begin{gather*}
+\dvtLpdv{\dot{\xi}} = \dvt{m \qty(\dot{\xi} -\omega\eta)} = m\qty(\ddot{\xi} -\omega\dot{\eta})
+\\
+\Lpdv{\xi} = m \qty( \omega^2\xi +\omega\dot{\eta})
+\\
+m\qty(\ddot{\xi} -\omega\dot{\eta}) - m \qty( \omega^2\xi + \omega\dot{\eta}) = 0
+\\
+\ddot{\xi} - \underbrace{\omega^2\xi}_{Centrifugal} - \underbrace{2\omega\dot{\eta}}_{Coriolis} = 0
+\end{gather*}
+\begin{gather*}
+\dvtLpdv{\dot{\eta}} = \dvt{m\qty(\dot{\eta} + \omega\xi)} =m\qty( \ddot{\eta} + \omega\dot{\xi})
+\\
+\Lpdv{\eta} = m\qty(\omega^2\eta - \omega\dot{\xi})
+\\
+m\qty( \ddot{\eta} + \omega\dot{\xi}) -  m\qty(\omega^2\eta - \omega\dot{\xi}) = 0
+\\
+\ddot{\eta} - \underbrace{\omega^2\eta}_{Centrifugal}+ \underbrace{2\omega\dot{\xi}}_{Coriolis}= 0
+\end{gather*}
+\end{multicols}
+I identify the centrifugal terms through the direct dependency of the coordinate it self in the e.o.m., and the Coriolis term as the term dependent on the time derivative of the <<other>> coordinate. This is also evident through the standard expression for Newton's second law in a rotating frame given as
+\begin{gather*}
+m\va{a} = \va{F} -2m\va{\omega}\cross\va{v} - m\dot{\va{\omega}}\cross \va{r} - m \va{\omega} \cross \qty(\va{\omega}\cross\va{r})
+\\
+\va{a} = -2\va{\omega}\cross\va{v} -\va{\omega} \cross \qty(\va{\omega}\cross\va{r})
+\end{gather*}
+where I canceled the external forces and the Euler force term (as these are assumed to be zero). The acceleration, velocity and position is given in the rotating reference frame $(\xi,\,\eta)$;
+\begin{align*}
+\va{a} = \mqty(\ddot{\xi}\\\ddot{\eta}\\0) \qc \va{v} =\mqty(\dot{\xi}\\\dot{\eta}\\0) \qc \va{r} = \mqty(x\\y\\0) \qc \va{\omega} = \mqty(0\\0\\\omega)
+\end{align*} Writing out the cross products gives
+\begin{gather*}
+\mqty(\ddot{\xi}\\\ddot{\eta}\\0) = -2 \mqty(-\omega\dot{\eta}\\-\omega\dot{\xi}\\0) -\mqty(-\omega^2\xi\\-\omega^2\eta\\0)
+\end{gather*}
+which gives the same equations as I found from Lagrange's equation
+\begin{align*}
+\ddot{\xi} &= 2\omega\dot{\eta} + \omega^2 \xi & \ddot{\eta} = 2\omega\dot{\xi}+\omega^2\eta
+\end{align*}
+\end{enumerate}
+\end{solution}
+\end{exercise}
+
+
+%%%%%%%%
+\begin{exercise}[Midterm Exam 2008]\\
+%%%%%%%%%%%
+{\em The brachistochrone challenge.}\\
+This is a classical problem in analytical mechanics. It was discussed by Galileo Galilei, who suggested a solution (but not the correct one), and studied the problem experimentally. In 1696 the problem was formulated as a challenge to the mathematicians at the time by Johann Bernoulli. He wrote in the journal {\em Acta Eruditorum}:\footnote{Johann Bernoulli, {\em Problema novum ad cujus solutionem Mathematici invitantur,} (A new problem to whose solution mathematicians are invited), Acta Eruditorum 18 (1696) 269.}
+
+\begin{quote}
+I, Johann Bernoulli, address the most brilliant mathematicians in the world. Nothing is more
+attractive to intelligent people than an honest, challenging problem, whose possible solution
+will bestow fame and remain as a lasting monument. Following the example set by Pascal,
+Fermat, etc., I hope to gain the gratitude of the whole scientific community by placing
+before the finest mathematicians of our time a problem which will test their methods and the
+strength of their intellect. If someone communicates to me the solution of the proposed
+problem, I shall publicly declare him worthy of praise.
+\end{quote}
+
+The problem he formulated was the following:
+
+\begin{quote}
+Given two points A and B in a vertical plane, what is the curve traced out by a point acted
+on only by gravity, which starts at A and reaches B in the shortest time.
+\end{quote}
+
+Five solutions were obtained from scientist and mathematicians we are all acquainted with, Newton,
+Jacob Bernoulli (the older brother of Johann), Leibniz and de L'H{\^o}pital, in addition to Johann himself. Johann Bernoulli gave a formulation of the problem where he could use an anology to Snell's law of refraction in optics to solve the problem.
+
+%%%%%%%%%%%%
+\begin{figure}[h]
+\begin{center}
+\includegraphics[height=5cm]{Brachistochrone.eps}
+\end{center}
+\caption{Illustration of the brachistochrone problem.}
+\label{fig:brach}
+\end{figure}
+%%%%%%%%%%%%
+
+Let us now rephrase the problem with a few more words: Assume a small body, named $P$ in Fig.~\ref{fig:brach}, moves in a vertical plane under the influence of gravity only. It leaves a point $A$ with zero velocity and follows (without friction) a given path in the plane which passes through a second point $B$, as shown in the figure. Assume the path between the two points $A$ and $B$ can be changed, while the points themselves stay fixed. For which path between the two points does the body spend the least time on the transit from point $A$ to point $B$? 
+
+The challenge for you is the following: Find the solution to the brachistochrone problem by using the correspondence between the variational problem (finding the ``path of shortest time'') and the Lagrange equation, in the way discussed in the lectures. 
+
+The body $P$ is to be treated as a point particle of mass $m$ and the path is represented by a function $y(x)$ with $x$ as the horizontal and $y$ as the vertical coordinate. The boundary conditions, which fix the positions of point $A$ and $B$, are specified as, $y(x_A)=y_A\,,\;y(x_B)=y_B$. 
+To simplify the equations assume in the following that the initial coordinates are $x_A=y_A=0$.
+
+\begin{itemize}
+\item[\bf a)] Show that the time $T$  spent by the body on the way between $A$ and $B$ can be expressed as an integral of the form
+\begin{equation}
+T[y(x)]=\int_{x_A}^{x_B} L(y,y') dx, \label{eq:Time-action}
+\end{equation}
+with $y'=\frac{dy}{dx}$, and with 
+\begin{equation}
+L(y,y')=\sqrt{\frac{1+y'^2}{-2gy}}. \label{eq:Lagrangian_x_time}
+\end{equation}
+For the derivation, make use of energy conservation in the form $\frac{1}{2}m v^2+mgy=0$, with $y<0$.
+\item[\bf b)] With $L(y,y')$ interpreted as a Lagrangian ($x$ then plays the role of $t$ in the usual formulation) the canonically conjugate momentum is $p=\frac{\partial L}{\partial y'}$ and the Hamiltonian is $H=py'-L$. Explain why $H$ is a constant of motion and use this fact to show that $y(x)$ satisfies a differential equation of the form
+\begin{equation}
+(1+y'^2)y=-k^2,
+\label{eq:diff}
+\end{equation}
+with $k$ as a constant.
+\item[\bf c)] Equation~(\ref{eq:diff}) has a solution which can be written on {\em parametric form} as
+\begin{eqnarray}
+&&x=\frac{1}{2} k^2(\theta-\sin\theta) \label{eq:parsolx},\\
+&&y=\frac{1}{2} k^2(\cos\theta-1) \label{eq:parsoly},
+\end{eqnarray}
+where $\theta$ has been introduced as a curve parameter. Show that (\ref{eq:parsolx}) and (\ref{eq:parsoly}) constitute a solution of the differential equation (\ref{eq:diff}) by changing the variable from $x$ to $\theta$ in (\ref{eq:diff}), and by using the above expression for $y(\theta)$. In what way are the boundary conditions taken care of by this solution?
+
+Relate $\theta$ to the boundary condition.
+
+\item[\bf d)]  The curve $y(x)$ defined by the solution of the brachistochrone problem is a section of a {\em cycloid}, known for example as the curve traced out by a point on the periphery of a rolling wheel. Make a plot which shows the form of the curve. 
+\item[\bf e)] Assume that point $B$ lies at the lowest point of the cycloid. Show that in this case the following relation has to be satisfied,  $y_B=-\frac{2}{\pi} \,x_B$. Calculate, for that situation, the time used by the body to reach point $B$ from $A$ and compare with the time used when the body instead follows a straight  line between the two points.
+\end{itemize}
+\begin{solution}
+\begin{enumerate}[\bf a)]
+\item To shown \cref{eq:Time-action} I use energy conservation, where the body start out with zero velocity at $y(x_A) = 0$, e.i. with zero potential and kinetic energy. This means that at some later point $x$ the sum of the energies is also zero with negative $y$ values
+\begin{gather*}
+\qq*{line element along $y(x)$} \dd s = \sqrt{\dd x^2 + \dd y^2} = \sqrt{1+\qty(\dv{y}{x})^2}\dd x
+\\
+\qq*{velocity along line element} v = \dv{s}{t} = \sqrt{1+\qty(\dv{y}{x})^2}\dv{x}{t}
+\\
+\half m v(x)^2 + mgy(x) = 0
+\\
+\Rightarrow \half m \qty[1 + \qty(\dv{y}{x})^2]\qty(\dv{x}{t})^2 + mgy = 0
+\\
+\sqrt{1 + \qty(\dv{y}{x})^2}\qty(\dv{x}{t})  = \sqrt{-2gy}
+\\
+\dv{t}{x} = \sqrt{\frac{1+y'^2}{-2gy}} \qq{where} y' = \dv{y}{x}
+\end{gather*}
+This is a separable equation for how the time changes with $x$. To find the time between two points I integrate between them giving
+\begin{gather}
+\int_0^T \dd t = \int_{x_A}^{x_B} \sqrt{\frac{1+y'^2}{-2gy}} \dd x  \label{eq:Timeeq}
+\\
+T[y(x)] = \int_{x_A}^{x_B} L(y,y') \dd x \notag
+\end{gather}
+as I wanted to show.
+\item With \cref{eq:Lagrangian_x_time} interpreted as the Lagrangian with $x$ as the <<time>> coordinate I note that there are no explicit $x$ dependency, so the relation
+\[ -\Lpdv{x} = \dv{H}{x} = 0 \]
+indicates $H$ as a constant of motion. The Hamiltonian can also be thought of as the total energy, which I already used as a constant of motion in \textbf{a)}. To show \cref{eq:diff} I start by finding the Hamiltonian
+\begin{gather*}
+H = \Lpdv{y'} y' - L = \half \qty(\frac{1 + y'^2}{-2gy})^{-1/2}\qty(\frac{2y'}{-2gy})y' - L = E
+\\
+= \frac{y'^2}{-2gy} \qty(\frac{1 + y'^2}{-2gy})^{-1/2} - \qty(\frac{1 + y'^2}{-2gy})^{1/2} = E \quad \eval \cdot \qty(\frac{1 + y'^2}{-2gy})^{1/2}
+\\
+= \frac{y'^2}{-2gy} - \qty(\frac{1 + y'^2}{-2gy}) = E \qty(\frac{1 + y'^2}{-2gy})^{1/2}
+\\
+= \frac{1}{2gy}=E\qty(\frac{1 + y'^2}{-2gy})^{1/2} \qq{square both sides}
+\\
+\frac{1}{(2gy)^2} = E^2 \qty(\frac{1 + y'^2}{-2gy}) \qc  \qty(1+y'^2) = \frac{-1}{E^2gy} 
+\\
+\Rightarrow \qty(1+y'^2) y = -k^2 \qwhere k = \frac{1}{E\sqrt{g}}
+\end{gather*}
+\item To make the change of variables I express $y'$ as $y' = \dv{y}{\theta}\dv{x}{\theta}$.
+\begin{gather*}
+\dv{y}{\theta} = -\half k^2 \sint \qc \dv{x}{\theta} = \half k^2 \qty(1-\cost) \, \Rightarrow \, \dv{\theta}{x}= \frac{2}{k^2\qty(1-\cost)}
+\end{gather*}
+I insert these expressions in \cref{eq:diff} 
+\begin{gather*}
+1+y'^2 = 1 + \qty(\dv{y}{\theta}\dv{x}{\theta})^2 = 1 + \frac{\sinsint}{\qty(1-\cost)^2} = \qty((1-\cost)^2 + \sinsint) \frac{1}{(1-\cost)^2} 
+\\
+= \frac{2(1 - \cost)}{\qty(1-\cost)^2} = \frac{2}{1-\cost} 
+\\
+ \qq*{\cref{eq:diff} becomes} \frac{2}{1-\cost} \half k^2\qty(\cost -1) = -k^2
+ \\
+ \qq*{which reduces to} \frac{\cost -1}{1- \cost} = -1 \Rightarrow -1 = -1
+\end{gather*}
+where I have shown that the parametric form of the solution is consistent. For the boundary conditions I have that $x_A = y_A = 0$, which is consistent with $\theta_A = 0$. For the endpoint $B$ I have 
+\begin{align*}
+y_B &= \half k^2 \qty( \cos(\theta_B) -1) 
+\\
+x_B &= \half k^2 \qty( \theta_B - \sin(\theta_B))
+\end{align*}
+given a value for $\theta_B$ I can find the point $B = [x_B,\, y_B]$.
+I have tried to solve the equations for $\theta_B$, which gave 
+\begin{align*}
+\qq*{from $y_B$:} \cos(\theta_B) &= \frac{2y_B}{k^2}+1
+\\
+\qq*{from $x_B$:}  \sin(\theta_B) &= \theta_B - \frac{2x_B}{k^2} \qor   \sin(\theta_B) =  \arccos(\frac{2y_B}{k^2}+1) - \frac{2x_B}{k^2}
+\\
+\frac{\sin(\theta_B)}{\cos(\theta_B)} = \tan(\theta_B) &= \frac{\theta_B - \frac{2x_B}{k^2}}{\frac{2y_B}{k^2}+1}
+\end{align*}
+but I have not been able to use these expressions correctly in the following where I have plotted the curve, so I might have made a mistake somewhere.
+
+\item As discussed, I have not been able to find a value for $\theta_B$ given some point $B$ that makes sense in the plot. I have therefore chosen a value for $\theta_B = \frac{3\pi}{2}$ and plotted the curve using the parameterized equations (\ref{eq:parsolx}) and (\ref{eq:parsoly}).
+\fig[Brachistochrone curve from parameterized equations (\ref{eq:parsolx}) and (\ref{eq:parsoly}). $\theta_A = 0$, $\theta_B = \frac{3\pi}{2}$.]{brachistochrone.pdf}
+
+\item If $B$ is the lowest point of the cycloid then $\dv{y}{\theta} = 0 $ at $\theta_B$. So
+\[ \dv{y}{\theta} = -\half k^2\sin(\theta_B) = 0 \Rightarrow \theta_B = \pi \] 
+using this in the parameterized equations gives
+\begin{align*}
+y_B &= \half k^2 \qty(\cos(\pi)-1) = -k^2
+\\
+x_B &= \half k^2 \qty( \pi - \sin(\pi)) = \half k^2 \pi
+\\
+\frac{y_B}{x_B} &= \frac{-k^2}{\half k^2 \pi } \Rightarrow y_B = \frac{-2}{\pi}x_B.
+\end{align*}
+To find the time between the two points I use \cref{eq:Timeeq} with the change of variable from $x$ to $\theta$
+\begin{gather*}
+1+y'^2 = \frac{2}{1-\cost} \qc -2gy = gk^2\qty(1-\cost)
+\\
+\qq{so} \frac{1+y'^2}{-2gy} = \frac{2}{gk^2\qty(1-\cost)^2} \qand \dd x = \half k^2\qty(1-\cost)\dd \theta
+\\
+\qq*{the integrand becomes} \sqrt{\frac{2}{gk^2\qty(1-\cost)^2}} \half k^2\qty(1-\cost)\dd \theta = \sqrt{\frac{2}{gk^2}}\half k^2 \dd \theta = \frac{k}{\sqrt{2g}} \dd \theta
+\\
+\qq*{integrating in $t\in[0,T_B]$ and $\theta\in[0,\pi]$} \int_0^{T_B} \dd t = T_B = \int_0^{\pi} \frac{k}{\sqrt{2g}} \dd \theta
+\\
+\qq*{finally giving the time} T_B = \frac{k\pi}{\sqrt{2g}} \approx 0.71 k
+\end{gather*}
+For the straight line I have $y = ax + b$, with the boundary conditions together with the parameterized equations implying $a = -\frac{2}{\pi}$, $b= 0$ and the endpoint $x_B = \frac{\pi}{2}k^2$. With this $y(x)$ the Lagrangian becomes
+\[ L = \sqrt{\frac{1+y'^2}{-2gy}} = \sqrt{\frac{1+\frac{4}{\pi^2}}{\frac{4g}{\pi}x}} = \sqrt{\frac{\pi^2+4}{\pi 4 g x}}\]
+so I can find the time between $A$ and $B$ on a straight line
+\begin{align*}
+T_S &= \int_{x_A}^{x_B} L(y,y') \dd x = \int_{x_A}^{x_B} \sqrt{\frac{\pi^2+4}{\pi 4 g}}x^{-1/2} \dd x
+\\
+&= 2 \sqrt{\frac{\pi^2+4}{\pi 4 g}} x^{1/2} \eval_{x_A = 0}^{x_B=\frac{\pi k^2}{2}} = 2 \sqrt{\frac{\pi^2+4}{\pi 4 g}} \sqrt{\frac{\pi}{2}}k \approx 0.84 k.
+\end{align*}
+The fraction of the two times
+\[ \frac{T_B}{T_S} = \frac{0.71 k}{0.84 k} \approx 0.845 \Rightarrow T_B = 0.845 T_S\]
+so the time used on the brachistochrone curve is approximately $85\%$ of the time used on the straight line.
+\end{enumerate}
+\end{solution}
+\end{exercise}
+
+
+\end{document}
+
