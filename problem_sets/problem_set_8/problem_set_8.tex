@@ -1,0 +1,88 @@
+\documentclass[11pt,a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\pagestyle{empty}
+
+\usepackage{graphicx} % Include figure files
+\usepackage{amstext,amsbsy,amssymb}
+%\usepackage{times} 
+
+%% Numbered problems
+\newcounter{excount}[chapter]
+\newenvironment{exercise}[1][]{\addtocounter{excount}{1} \noindent {\bf Problem
+    \arabic{excount} \ \ #1}\hspace{2mm}}{\vspace{4mm}}
+
+
+\title{FYS3120 Classical Mechanics and Electrodynamics\\ 
+\vspace{15mm}Problem set 8}
+
+
+%%%%%%%
+\begin{document}
+%%%%%%%
+\maketitle
+
+
+%%%%%%%%%%
+\begin{exercise}
+%%%%%%%%%%
+A monocromatic light source is at rest in the laboratory and sends photons with frequency $\nu_0$ towards a mirror which has its reflective surface perpendicular to the beam direction. The mirror moves away from the light source with velocity $v$. Use the transformation formula for four-momentum $p^\mu=(E/c,\vec p)$ and the Planck relation $E=h\nu$ to:
+\begin{itemize}
+\item[\bf a)] Find the frequency of the emitted and reflected light in the rest frame of the mirror.
+\item[\bf b)] Find the frequency of reflected light in the lab system.
+\end{itemize}
+\end{exercise}
+
+
+%%%%%%%%%%
+\begin{exercise}
+%%%%%%%%%%
+Figure~\ref{fig:collisionA} shows a particle with mass $m$ and (relativistic) kinetic energy $K$ in the laboratory frame $S$. The particle is moving towards another particle, with the same mass $m$, which is at rest in $S$.
+
+%%%%%%%%%%%%
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=6cm]{CollisionA.eps}
+\end{center}
+\caption{Collision between two particles of mass $m$ resulting in a particle with mass $M$.}
+\label{fig:collisionA}
+\end{figure}
+%%%%%%%%%%%%
+
+\begin{itemize}
+\item[\bf a)] Find the velocity $v$ of the first particle expressed in terms of the dimensionless quantity $\alpha=K/mc^2$ (and the speed of light).
+\end{itemize}
+
+First we will assume that the particles collide in  such a way that they form one particle after the collision (a totally inelastic collision).
+\begin{itemize}
+\item[\bf b)] Determine the compound particle's energy $E$, momentum $P$, velocity $V$ and mass $M$ in terms of the velocity $v$ (or $\gamma$). Find the change in the total kinetic energy of the system due to the collision.
+\end{itemize}
+
+In the rest of the exercise we will assume that the situation before the collision is as described earlier, but that the particles now collide elastically, {\it i.e.}\ after the collision the two particles are the same as before the collision, with no change in their masses. The collision happens in such a way that the particles after the collision make the same angle, $\theta$, with the $x$-axis in the lab frame $S$, see Fig.~\ref{fig:CollisionB}.
+
+%%%%%%%%%%%%
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=6cm]{CollisionB.eps}
+\end{center}
+\caption{Collision between two particles of mass $m$ resulting in scattering at angle $\theta$.}
+\label{fig:CollisionB}
+\end{figure}
+%%%%%%%%%%%%
+
+\begin{itemize}
+\item[\bf c)] Show that after the collision the particles have the same magnitude of momentum ($|\vec p_1|=|\vec p_2|$) and energy ($E_1=E_2$).
+\item[\bf d)] Determine $E\equiv E_1=E_2$ and $p\equiv |\vec p_1|=|\vec p_2|$.
+\item[\bf e)] Determine the angle $\theta$. Find $\theta$ in the limiting cases when $\alpha=K/mc^2$ goes to zero and to infinity. Show that $\theta<\pi/4$. 
+\end{itemize}
+\end{exercise}
+
+
+
+%%%%%%%%
+ \end{document}
+ %%%%%%%%
+
+

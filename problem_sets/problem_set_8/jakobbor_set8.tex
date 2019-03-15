@@ -1,0 +1,468 @@
+\documentclass[11pt,a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%%%%%%%%%% Own packages
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{multicol}
+
+% Boxing
+\usepackage[most]{tcolorbox}
+\tcbset{enhanced}
+%\usepackage{capt-of}	% captions in boxes
+
+% Header/footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+
+% Listsings and items
+\usepackage[shortlabels]{enumitem}
+\setenumerate{wide,labelwidth=!, labelindent=0pt}
+\usepackage{varioref}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+% Maths
+\usepackage{physics}
+\usepackage{cancel}
+\usepackage{amstext,amsbsy,amssymb}
+\usepackage{mathtools}
+\usepackage{times} 
+\usepackage{siunitx}
+\usepackage{tensor}
+
+%% Graphics
+\usepackage{caption}
+\captionsetup{margin=10pt,font=small,labelfont=bf}
+%\renewcommand{\thesubfigure}{(\alph{subfigure})} % Style: 1(a), 1(b)
+%\pagestyle{empty}
+\usepackage{graphicx}% Include figure files
+%\usepackage{epstopdf}
+%\usepackage{pdfsync}
+
+
+%% Numbered problems
+\newcounter{excount}[chapter]
+\newenvironment{exercise}[1][]{\addtocounter{excount}{1} \noindent {\bf Problem
+    \arabic{excount} \ \ #1}\hspace{2mm}}{\vspace{4mm}}
+
+%% Solution environment
+\newenvironment{solution}[1][]
+    {\begin{tcolorbox}[title=Solution #1,halign lower=right,breakable]
+    }
+    {
+    \tcblower Jakob Borg
+    \end{tcolorbox}
+	\vspace{5mm}
+    }
+
+%% Figure command
+\newcommand{\fig}[2][]
+{
+\begin{center}
+\includegraphics[width=0.49\linewidth]{#2}
+\captionof{figure}{#1}
+\label{fig:fig\arabic{figure}}
+\end{center}
+}
+
+%% Quic-half
+\newcommand{\half}
+{
+\frac{1}{2}
+}
+
+%% Quick center-of-mass
+\newcommand{\com}
+{
+\text{CoM}
+}
+
+%% quad while
+\newcommand{\qwhile}
+{
+\qq{while}
+}
+
+%% quad where
+\newcommand{\qwhere}
+{
+\qq{where}
+}
+
+%% Quick transformation arrow
+\newcommand{\transarrow}
+{
+\quad \rightarrow \quad
+}
+
+%% Lagrangian's equation
+\newcommand{\Leq}[1]
+{
+\dv{t}\qty(\pdv{L}{\dot{#1}}) - \pdv{L}{#1}
+}
+
+%% Quick L and H pdv
+\newcommand{\Lpdv}[1]
+{
+\pdv{L}{#1}
+}
+\newcommand{\Hpdv}[1]
+{
+\pdv{H}{#1}
+}
+
+%% Time derivative of Lpdv
+\newcommand{\dvtLpdv}[1]
+{
+\dv{t} \qty(\Lpdv{#1}) 
+}
+
+%% Time derivative of argument
+\newcommand{\dvt}[1]
+{
+\dv{t} \qty(#1)
+}
+
+%% Quick theta dot and phi dot
+\newcommand{\dtheta}
+{
+\dot{\theta}
+}
+\newcommand{\dphi}
+{
+\dot{\phi}
+}
+\newcommand{\ddtheta}
+{
+\ddot{\theta}
+}
+\newcommand{\ddphi}
+{
+\ddot{\phi}
+}
+
+%% Quick dot vector
+\newcommand{\dotva}[1]
+{
+\dot{\va{#1}}
+}
+\newcommand{\ddotva}[1]
+{
+\ddot{\va{#1}}
+}
+
+%% Quick sin cos of theta and phi commands
+\newcommand{\cost}
+{
+\cos(\theta)
+}
+\newcommand{\sint}
+{
+\sin(\theta)
+}
+\newcommand{\coscost}
+{
+\cos[2](\theta)
+}
+\newcommand{\sinsint}
+{
+\sin[2](\theta)
+}
+\newcommand{\cosp}
+{
+\cos(\phi)
+}
+\newcommand{\sinp}
+{
+\sin(\phi)
+}
+
+%% Quick sin cos of omega t
+\newcommand{\coswt}
+{
+\cos(\omega t)
+}
+\newcommand{\sinwt}
+{
+\sin(\omega t)
+}
+\newcommand{\coscoswt}
+{
+\cos^2(\omega t)
+}
+\newcommand{\sinsinwt}
+{
+\sin^2(\omega t)
+}
+
+\title{FYS3120 Classical Mechanics and Electrodynamics\\ 
+\vspace{15mm}Problem set 8}
+\author{Jakob Borg}
+%%%%%%%
+\begin{document}
+%%%%%%%
+
+\maketitle
+
+%\lhead{Jakob Borg}
+\lhead{Problem set 8 FYS3120}
+\rhead{Jakobbor}
+%%%%%%%%
+
+%%%%%%%%%%
+\begin{exercise}
+%%%%%%%%%%
+A monocromatic light source is at rest in the laboratory and sends photons with frequency $\nu_0$ towards a mirror which has its reflective surface perpendicular to the beam direction. The mirror moves away from the light source with velocity $v$. Use the transformation formula for four-momentum $p^\mu=(E/c,\vec p)$ and the Planck relation $E=h\nu$ to:
+\begin{itemize}
+\item[\bf a)] Find the frequency of the emitted and reflected light in the rest frame of the mirror.
+\begin{solution}[\bf 1.a]
+Assuming the mirror and the light moving in the x-direction for simplicity, $\vu{v} = \vu{x}$. In the lab frame, RF $S$, the light has four-momentum $p^\mu$, which transforms to $p^{'\mu}$ in the mirror's frame, RF $S^{'}$, as follows
+\begin{align*}
+p^\mu &= \qty(\frac{E}{c},\va{p}) \quad \rightarrow\quad p\indices{^'^\rho} = L\indices{^\rho_\mu}p^\mu
+\end{align*}
+where 
+\begin{align*}
+p^0 &= \frac{E}{c}= \frac{h\nu_0}{c}, & m = 0 \Rightarrow E = pc \Rightarrow  \va{p} &= \qty(\frac{h\nu_0}{c} ,\, 0,\, 0), & \gamma &= \frac{1}{\sqrt{1-\beta^2}}, & \beta &= \frac{v}{c}.
+\end{align*}
+Notice that $p^0 = p^1$. Transforming each component I find
+\begin{align*}
+p\indices{^'^0} &= \gamma\qty(p^0-\beta p^1) = \gamma \qty(\frac{h\nu_0}{c}-\beta\frac{h\nu_0}{c}) = \frac{h\nu_0}{c}\gamma (1-\beta)
+\\
+\qq{similarly} p\indices{^'^1} &= \gamma\qty(p^1-\beta p^0) = \frac{h\nu_0}{c}\gamma(1-\beta)
+\\
+p\indices{^'^2} &= p^2 \qand p\indices{^'^3} = p^3
+\end{align*}
+The relationship between the frequencies in the two frames can be found from the relation between the $p^0$s
+\begin{align*}
+p\indices{^'^0} &= \frac{h\nu^{'}_0}{c} = \frac{h\nu_0}{c}\gamma (1-\beta)
+\\
+\qq*{so:} \nu_0^{'} &= \nu_0 \gamma(1-\beta)
+\end{align*}
+\end{solution}
+\item[\bf b)] Find the frequency of reflected light in the lab system.
+\begin{solution}[\bf 1.b]
+I find the frequency in the lab system by transforming back into the lab RF
+\begin{align*}
+p^\nu &= L\indices{^\nu_\rho}p\indices{^'^\rho}.
+\end{align*}
+Here one needs to mind the sign in the velocity, as the lab frame moves in the opposite direction of the mirror, $\beta = -v/c$. I only need the zero'th component to find the frequency
+\begin{align*}
+p^0 &= \gamma \qty(p\indices{^'^0}-\beta p\indices{^'^1}) = \gamma \qty( \frac{h\nu_0}{c}\qty(1-\beta)-\beta \frac{h\nu_0}{c}\qty(1-\beta))
+\\
+&= \frac{h\nu_0}{c}\gamma^2\qty(1-\beta)^2 \qq{using} \gamma^2 = \frac{1}{(1-\beta)(1+\beta)}
+\\
+&= \frac{h\nu_0}{c}\frac{1-\beta}{1+\beta}.
+\end{align*}
+Let the expression for $p^0$ be $\frac{h\nu_R}{c}$ for the received frequency $\nu_R$, then
+\begin{align*}
+\nu_R &= \nu_0\frac{1-\beta}{1+\beta} \qwhere \beta = -\frac{v}{c}
+\end{align*}
+\end{solution}
+\end{itemize}
+\end{exercise}
+
+
+%%%%%%%%%%
+\begin{exercise}
+%%%%%%%%%%
+Figure~\ref{fig:collisionA} shows a particle with mass $m$ and (relativistic) kinetic energy $K$ in the laboratory frame $S$. The particle is moving towards another particle, with the same mass $m$, which is at rest in $S$.
+
+%%%%%%%%%%%%
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=6cm]{CollisionA.eps}
+\end{center}
+\caption{Collision between two particles of mass $m$ resulting in a particle with mass $M$.}
+\label{fig:collisionA}
+\end{figure}
+%%%%%%%%%%%%
+
+\begin{itemize}
+\item[\bf a)] Find the velocity $v$ of the first particle expressed in terms of the dimensionless quantity $\alpha=K/mc^2$ (and the speed of light).
+\end{itemize}
+\begin{solution}[\bf 2.a]
+The relativistic kinetic energy is the relativistic energy minus the rest mass energy. Let $m_1$ be the mass of particle 1.
+\begin{align*}
+K &= E - m_1c^2 = \gamma m_1c^2 - m_1 c^2 = m_1c^2(\gamma-1)
+\\
+\frac{K}{m_1c^2} = \alpha &= \gamma -1 \quad \Rightarrow \frac{1}{\sqrt{1-\beta^2}} = \alpha+1
+\\
+1-\beta^2 &= \frac{1}{(\alpha+1)^2}
+\\
+\beta &= \sqrt{1-\frac{1}{(\alpha+1)^2}} \quad \Rightarrow v = c\sqrt{1-\frac{1}{(\alpha+1)^2}}
+\end{align*}
+\end{solution}
+
+First we will assume that the particles collide in  such a way that they form one particle after the collision (a totally inelastic collision).
+\begin{itemize}
+\item[\bf b)] Determine the compound particle's energy $E$, momentum $P$, velocity $V$ and mass $M$ in terms of the velocity $v$ (or $\gamma$). Find the change in the total kinetic energy of the system due to the collision.
+\end{itemize}
+\begin{solution}[\bf 2.b]
+To determine the properties of the compound particle I use conservation of relativistic energy and momentum through the four-momentum, which conserves the two quantities separately
+\begin{align*}
+\sum_i p_i^\mu &= \sum_f p_f^\mu
+\end{align*}
+where index $i$ and $f$ describes the initial and final quantities before and after the collision. In these calculations I constantly use that $\va{v}_2 = 0$ and $m_1 = m_2$.
+
+First I find the final energy, $E_f = E = \gamma_f M c^2$, through the zero'th component of $p^\mu$:
+\begin{align}
+E &= \gamma_f M c^2 = \gamma_1 m_1 c^2 + \gamma_2 m_2 c^2 \qwhere \gamma_2 = 1 \notag
+\\
+\Rightarrow E &= \qty(\gamma_1+1)m_1 c^2 \label{eq:E}
+\end{align}
+The momentum is easily found from the vector component of $p^\mu$:
+\begin{align}
+\va{P} &= \gamma_f M \va{V} = \gamma_1 m_1 \va{v}_1 + \gamma_2 m_2 \va{v}_2 = \gamma_1 m_1 \va{v}_1 \notag
+\\
+\Rightarrow \va{P} &= \gamma_1 m_1 \va{v}_1 \label{eq:P}
+\end{align}
+Using the two last results, \cref{eq:E,eq:P}, I find the velocity:
+\begin{align}
+\va{P} &= \va{p}_i \notag
+\\
+\gamma_f M \va{V} &= \gamma_1 m_1 \va{v}    \notag
+\\
+\va{V} &= \frac{\gamma_1m_1\va{v}_1}{\gamma_f M} \qq{from \cref{eq:E}} \gamma_f M = (\gamma_1+1)m_1 \notag
+\\
+\Rightarrow \va{V} &= \frac{\gamma_1}{\gamma_1+1}\va{v}_1 \label{eq:V}
+\end{align}
+Rewriting the relativistic energies as $E = \sqrt{m^2c^4+p^2c^2}$, using the result from \cref{eq:P} to express the compound energy and $E_2 = m_2c^2$ as the rest energy of body 2 I find
+\begin{align}
+E_f = E_1 + E_2 &= \sqrt{M^2c^4+\va{P}^2c^2} = \sqrt{m_1^2c^4+\va{p}_1^2m_1^2c^2} + m_2c^2 \notag
+\\
+\sqrt{M^2c^4 + \qty(\gamma_1m_1\va{v}_1)^2c^2} &= \sqrt{m_1^2c^4 + \qty(\gamma_1m_1\va{v}_1)^2c^2} + m_2c^2    \notag
+\\
+M^2c^4 +\cancel{\qty(\gamma_1m_1\va{v})^2c^2} &= m_1^2c^4+\cancel{\gamma_1^2m_1^2\va{v}_1c^2}+ 2m_2c^2\sqrt{m_1^2c^4 + \qty(\gamma_1m_1\va{v}_1)^2c^2} + m_2^2c^4    \notag
+\\
+m_1 = m_2 \qc M^2c^4 &= 2m_1^2c^4 + 2m_1c^2\sqrt{m_1^2c^4 + \qty(\gamma_1m_1\va{v}_1)^2c^2} \eval \cdot \frac{1}{2mc^2}   \notag
+\\
+\frac{M^2c^2}{2m_1} &= m_1c^2 + \sqrt{m_1^2c^4 + \qty(\gamma_1m_1\va{v}_1)^2c^2}     \notag
+\\
+&= E_2 + E_1 = \qty(\gamma_1+1)m_1c^2    \notag
+\\
+\Rightarrow M &= m\sqrt{2\qty(\gamma_1+1)} \label{eq:M}
+\end{align}
+\end{solution}
+
+In the rest of the exercise we will assume that the situation before the collision is as described earlier, but that the particles now collide elastically, {\it i.e.}\ after the collision the two particles are the same as before the collision, with no change in their masses. The collision happens in such a way that the particles after the collision make the same angle, $\theta$, with the $x$-axis in the lab frame $S$, see Fig.~\ref{fig:CollisionB}.
+
+%%%%%%%%%%%%
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=6cm]{CollisionB.eps}
+\end{center}
+\caption{Collision between two particles of mass $m$ resulting in scattering at angle $\theta$.}
+\label{fig:CollisionB}
+\end{figure}
+%%%%%%%%%%%%
+
+\begin{itemize}
+\item[\bf c)] Show that after the collision the particles have the same magnitude of momentum ($|\vec p_1|=|\vec p_2|$) and energy ($E_1=E_2$).
+\begin{solution}[\bf 2.c]
+To avoid confusion with the indices I will write the quantities before the collision with a bar.
+
+I show $|\va{ p}_1|=|\va {p}_2| = p$ by conservation of momentum
+\begin{align*}
+\bar{\va{p}}_1 &= \va{p}_1+\va{p}_2
+\end{align*}
+writing out the equation on component form, as the collision is elastic these can be solved separately;
+\begin{align}
+\bar{p}_1\qty(1,0,0) &= p_1\qty(\cost,\sint,0) + p_2\qty(\cost,-\sint,0) \label{eq:P_conserved_component}
+\end{align}
+reveals the relation in the second component
+\begin{align*}
+\bar{p}_1\cdot 0 = 0 &= p_1\sint - p_2\sint = \sint (p_1-p_2)
+\\
+\Rightarrow p_1 &= p_2
+\end{align*}
+where $\theta=0$ is not considered.
+
+The energies after the collision can be written as 
+\begin{equation}
+\begin{aligned}
+E_1^2 &= p_1^2 c^2+m_1^2c^4
+\\
+E_2^2 &= p_2^2 c^2+m_2^2c^4. \label{eq:Energies_after}
+\end{aligned}
+\end{equation}
+As $m_1=m_2$ and I've shown $|\va{p}_1|=|\va{p}_2| = p_1 =  p_2$ these energies are identical.
+
+This problem can also be solved (maybe in a nicer way) by looking at the system from the center-of-mass RF (CoM).
+\end{solution}
+
+\item[\bf d)] Determine $E\equiv E_1=E_2$ and $p\equiv |\vec p_1|=|\vec p_2|$.
+\begin{solution}[\bf 2.d]
+To determine the magnitude of momentum $p$ I use the first component of \cref{eq:P_conserved_component} and that the magnitude of the momenta after the collision are equal. Having the expression for $p$ I can use \cref{eq:Energies_after} to express the energy by the same argument as in \textbf{2.c}:
+\begin{align*}
+\bar{p} &= 2p\cost
+\\
+\Rightarrow p &= \frac{\bar{p}}{2\cost} \qc E = \sqrt{\frac{\bar{p}^2c^2}{4\coscost} + m^2c^4}
+\end{align*}
+where I have stopped using subscript $1$ and $2$ as all the quantities discussed here are equal for both particles.
+\end{solution}
+
+\item[\bf e)] Determine the angle $\theta$. Find $\theta$ in the limiting cases when $\alpha=K/mc^2$ goes to zero and to infinity. Show that $\theta<\pi/4$. 
+\end{itemize}
+
+\begin{solution}[\bf 2.e]
+To determine the angle I will look at the conserved energy. In this calculation there are a lot of algebra and substitutions. Other approaches probably exists where the answer is easier to interpret, but this is the one I've found:
+\begin{align*}
+2E&= \bar{E}_1 + \bar{E}_2 
+\\
+2 \sqrt{\frac{\bar{p}^2c^2}{4\coscost} + m^2c^4} &= \sqrt{m^2c^4+\bar{p}^2c^2}+mc^2 \qq{square both}
+\\
+4\qty( \frac{\bar{p}^2c^2}{4\coscost} + m^2c^4 ) &= m^2c^4+\bar{p}^2c^2 + 2mc^2\sqrt{m^2c^4+\bar{p}^2c^2} + m^2c^4
+\\
+\frac{\bar{p}^2c^2}{\coscost} - \bar{p}^2c^2&= 2mc^2 \qty(\sqrt{m^2c^4+\bar{p}^2c^2} - mc^2) \tag{*} \label{eq:*}
+\end{align*}
+where in the last step I gathered all the terms with $mc^2$ on the right hand side, which contains the kinetic energy:
+\begin{align*}
+2mc^2 \qty(\sqrt{m^2c^4+\bar{p}^2c^2} - mc^2) &= 2mc^2\bar{K}
+\\
+&\qq*{where} \bar{K} = mc^2\qty(\bar{\gamma}_1-1) \qq{from \textbf{2.a}}
+\\
+=& 2 m^2c^4\qty(\bar{\gamma}_1-1).
+\end{align*}
+Rewriting \cref{eq:*} using the kinetic energy and $\bar{p}^2=\bar{\gamma}_1^2m^2\bar{v}_1^2$ I find
+\begin{align*}
+\bar{\gamma}_1^2m^2\bar{v}_1^2c^2\qty(\frac{1}{\coscost} - 1)&= 2 m^2c^4\qty(\bar{\gamma}_1-1)
+\\
+\bar{\gamma}_1^2\bar{\beta}^2\qty(\frac{1}{\coscost} - 1) &= 2\qty(\bar{\gamma}_1-1)
+\\
+\Rightarrow \coscost &= \frac{1}{\frac{2\qty(\bar{\gamma}_1-1)}{\bar{\gamma}_1^2\bar{\beta}^2}+1} = \frac{\bar{\gamma}_1^2\bar{\beta}^2}{\bar{\gamma}_1^2\bar{\beta}^2 +2\qty(\bar{\gamma}_1-1) }.
+\end{align*}
+where $\bar{\beta} = \frac{\bar{v}_1}{c}$. I have now expressed the angle using only the velocity of body 1 before the collision, so to reduce clutter I will stop using the bar notation. With $\gamma_1 = \frac{1}{\sqrt{1-\beta^2}}$ I find an expression for the angle $\theta$:
+\begin{align*}
+\coscost &= \frac{\beta^2}{\qty(1-\beta^2)\qty[\frac{\beta^2}{1-\beta^2}+\frac{2}{\sqrt{1-\beta^2}}-2]}
+\\
+&= \frac{\beta^2}{\beta^2 + 2\sqrt{1-\beta^2}-2\qty(1-\beta^2)}.
+\end{align*}
+For $\alpha \rightarrow \infty$ the kinetic energy is infinite and so $\beta \rightarrow 1$ as the velocity approaches $c$. Then
+\begin{align*}
+\lim_{\beta\rightarrow 1} \coscost &= \lim_{\beta\rightarrow 1}  \frac{\beta^2}{\beta^2 + 2\sqrt{1-\beta^2}-2\qty(1-\beta^2)} = 1
+\\
+\theta &= \arccos(\sqrt{1}) = 0.
+\end{align*}
+
+In the limit $\alpha \rightarrow 0$ the kinetic energy is zero, that means $\beta = \frac{v}{c} \rightarrow 0$. To find $\theta$ in the limits I use L'Hôpital's rule as I have a $0/0$ expression:
+\begin{align*}
+\lim_{\beta\rightarrow 0} \coscost &\overset{\mathclap{\mathrm{(H)}}}{=} \lim_{\beta\rightarrow 0} \frac{2\beta}{2\beta -2\beta \qty(1-\beta^2)^{-1/2} + 4\beta}
+\\
+&=\lim_{\beta\rightarrow 0}  \frac{2\beta}{6\beta - 2\beta \qty(1-\beta^2)^{-1/2} } = \lim_{\beta\rightarrow 0} \frac{2}{6-\frac{2}{\sqrt{1-\beta^2}}} = \frac{1}{2}
+\\
+\theta &= \arccos(\frac{1}{\sqrt{2}}) = \frac{\pi}{4}.
+\end{align*}
+As $0 < \alpha < \infty$ I have that $\theta < \frac{\pi}{4}$ as I wanted to show.
+\end{solution}
+\end{exercise}
+
+
+
+%%%%%%%%
+ \end{document}
+ %%%%%%%%
+
+
