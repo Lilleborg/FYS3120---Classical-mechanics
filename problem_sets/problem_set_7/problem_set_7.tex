@@ -1,0 +1,87 @@
+\documentclass[11pt,a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+\pagestyle{empty}
+
+\usepackage{graphicx} % Include figure files
+\usepackage{amstext,amsbsy,amssymb}
+%\usepackage{times} 
+
+%% Numbered problems
+\newcounter{excount}[chapter]
+\newenvironment{exercise}[1][]{\addtocounter{excount}{1} \noindent {\bf Problem
+    \arabic{excount} \ \ #1}\hspace{2mm}}{\vspace{4mm}}
+
+
+\title{FYS3120 Classical Mechanics and Electrodynamics\\ 
+\vspace{15mm}Problem set 7}
+
+
+%%%%%%%
+\begin{document}
+%%%%%%%
+\maketitle
+
+
+%%%%%%%%
+\begin{exercise}
+\begin{itemize}
+\item[\bf a)] Below we have four equations that involve tensors of different ranks. Clearly the consistency rules for covariant equations are not satisfied in all places. Show where there are errors in each equation, and show how the equations can be modified to bring them to correct covariant form (there will be multiple alternative solutions but we prefer the simple ones).
+\begin{equation}
+C^{\mu}=T^{\mu}_{\;\;\nu}\, A^{\mu}\,,\quad D_{\nu}=T^{\mu}_{\;\;\nu} \,A_{\mu}\,,\quad
+E_{\mu\nu\rho}=T_{\mu\nu}\,S^{\nu}_{\;\;\rho}\,,\quad G=S_{\mu\nu}\,T^{\nu}_{\;\;\alpha}\, A^{\alpha}.
+\end{equation}
+\item[\bf b)] Assume $A^\mu$ and $B^\mu$  to be four-vectors and $T^{\mu\nu}$ to be a rank-2 tensor. Show that by making products of these and by lowering and contracting indices, one can form several new four-vectors and scalars.
+\item[\bf c)] We have defined the following four tensor fields as functions of the space-time coordinates $x=(x^0,x^1,x^2,x^3)$,
+\begin{equation}
+f(x) =x_{\mu}x^{\mu}\,,\quad g^{\mu}(x) =x^{\mu}\,,\quad b^{\mu\nu}(x) =x^{\mu}x^{\nu}\,,\quad h^{\mu} (x) =\frac{x^{\mu}}{x_{\nu}x^{\nu}}.
+\end{equation}
+Calculate the following derivatives, 
+\begin{equation}
+\partial_{\mu} f(x)\,,\quad \partial_{\mu}g^{\mu}(x)\,,\quad \partial_{\mu} b^{\mu\nu}(x)\,,\quad \partial_{\mu} h^{\mu} (x),
+\end{equation}
+where the differential operator $\partial_{\mu}$ is defined by
+\begin{equation}
+\partial_{\mu}\equiv \frac{\partial}{\partial x^\mu}.
+\end{equation}
+{\it Hint:} If you are uncertain about results for tensors, a convenient way to check these is always to specify the index values explicitly, {\it e.g.}, in the first case, by choosing $\mu=1$, which gives $\partial_{\mu}=\frac{\partial}{\partial x}$, and writing $f(x)=(ct)^2-(x^2+y^2+z^2)$.
+\end{itemize}
+\end{exercise}
+
+
+%%%%%%%%%%
+\begin{exercise}[Modified version of final-exam question in 2006]\\
+An electron, with charge $e$, moves in a constant electric field $\vec E$. The motion is determined by the relativistic Newton's equation
+\begin{equation}
+\frac{d}{dt} \vec p = e \vec E,
+\end{equation}
+where $\vec p$ denotes the relativistic momentum $\vec p=m_e\gamma \vec v$, with $m_e$ as the electron rest mass, $\vec v$ as the velocity and $\gamma=1/\sqrt{1-(v/c)^2}$ as the relativistic gamma factor. We assume the electron to move along the field lines, that is, there is no velocity component orthogonal to $\vec E$. {\it Hint:} We remind you that the relativistic energy can be written
+\begin{equation}
+E = \gamma m_e c^2= \sqrt{p^2c^2+m_e^2c^4}.
+\end{equation}
+
+\begin{itemize}
+\item[\bf a)] Show that if $v=0$ at time $t=0$, then $\gamma$ depends on time $t$ as 
+\begin{equation}
+\gamma=\sqrt{1+\kappa^2 t^2},
+\end{equation}
+and determine $\kappa$.  
+\item[\bf b)] The proper time $\tau$ is related to the coordinate time $t$ by the formula $\frac{dt}{d\tau}=\gamma$. Show that if we write $\gamma=\cosh{\kappa \tau}$ then $\tau$ satisfies this above condition. 
+\item[\bf c)] For linear motion we have the following relation between the proper acceleration $a_0$ and the acceleration $a$ measured in a fixed inertial reference frame, $a_0=\gamma^3 a$. Use this to show that the electron has a constant proper acceleration, given by $\vec a_0= e\vec E/m_e$.
+{\it Hint:} You will need to find the time-derivative of $\gamma$. (A look in the lecture notes might be helpful.) 
+\item[\bf d)] Find explicit expressions for the four-velocity $U^{\mu}$ and the four-acceleration $A^{\mu}$ as functions of the proper time $\tau$ and show from these that we get the expected $A^{\mu}A_{\mu}=-a_0^2$. (For simplicity you may assume the motion to be in the $x$-direction.) As a reminder we also give the following functional relations:
+\begin{equation}
+\cosh^2x-\sinh^2x=1\,,\quad
+\frac{d}{dx}\cosh x=\sinh x\,,\quad\frac{d}{dx}\sinh x=\cosh x.
+\end{equation}
+\end{itemize}
+\end{exercise}
+
+
+%%%%%%%%
+ \end{document}
+ %%%%%%%%
+
+

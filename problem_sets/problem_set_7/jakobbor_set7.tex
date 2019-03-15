@@ -1,0 +1,445 @@
+\documentclass[11pt,a4paper]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+%%%%%%%%%%% Own packages
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{multicol}
+
+% Boxing
+\usepackage[most]{tcolorbox}
+\tcbset{enhanced}
+%\usepackage{capt-of}	% captions in boxes
+
+% Header/footer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+
+% Listsings and items
+\usepackage[shortlabels]{enumitem}
+\setenumerate{wide,labelwidth=!, labelindent=0pt}
+\usepackage{varioref}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+% Maths
+\usepackage{physics}
+\usepackage{cancel}
+\usepackage{amstext,amsbsy,amssymb}
+\usepackage{times} 
+\usepackage{siunitx}
+\usepackage{tensor}
+
+%% Graphics
+\usepackage{caption}
+\captionsetup{margin=10pt,font=small,labelfont=bf}
+%\renewcommand{\thesubfigure}{(\alph{subfigure})} % Style: 1(a), 1(b)
+%\pagestyle{empty}
+\usepackage{graphicx}% Include figure files
+%\usepackage{epstopdf}
+%\usepackage{pdfsync}
+
+
+%% Numbered problems
+\newcounter{excount}[chapter]
+\newenvironment{exercise}[1][]{\addtocounter{excount}{1} \noindent {\bf Problem
+    \arabic{excount} \ \ #1}\hspace{2mm}}{\vspace{4mm}}
+
+%% Solution environment
+\newenvironment{solution}[1][]
+    {\begin{tcolorbox}[title=Solution #1,halign lower=right,breakable]
+    }
+    {
+    \tcblower Jakob Borg
+    \end{tcolorbox}
+	\vspace{5mm}
+    }
+
+%% Figure command
+\newcommand{\fig}[2][]
+{
+\begin{center}
+\includegraphics[width=0.49\linewidth]{#2}
+\captionof{figure}{#1}
+\label{fig:fig\arabic{figure}}
+\end{center}
+}
+
+%% Quic-half
+\newcommand{\half}
+{
+\frac{1}{2}
+}
+
+%% Quick center-of-mass
+\newcommand{\com}
+{
+\text{c.m.}
+}
+
+%% quad while
+\newcommand{\qwhile}
+{
+\qq{while}
+}
+
+%% quad where
+\newcommand{\qwhere}
+{
+\qq{where}
+}
+
+%% Lagrangian's equation
+\newcommand{\Leq}[1]
+{
+\dv{t}\qty(\pdv{L}{\dot{#1}}) - \pdv{L}{#1}
+}
+
+%% Quick L and H pdv
+\newcommand{\Lpdv}[1]
+{
+\pdv{L}{#1}
+}
+\newcommand{\Hpdv}[1]
+{
+\pdv{H}{#1}
+}
+
+%% Time derivative of Lpdv
+\newcommand{\dvtLpdv}[1]
+{
+\dv{t} \qty(\Lpdv{#1}) 
+}
+
+%% Time derivative of argument
+\newcommand{\dvt}[1]
+{
+\dv{t} \qty(#1)
+}
+
+%% Quick theta dot and phi dot
+\newcommand{\dtheta}
+{
+\dot{\theta}
+}
+\newcommand{\dphi}
+{
+\dot{\phi}
+}
+\newcommand{\ddtheta}
+{
+\ddot{\theta}
+}
+\newcommand{\ddphi}
+{
+\ddot{\phi}
+}
+
+%% Quick dot vector
+\newcommand{\dotva}[1]
+{
+\dot{\va{#1}}
+}
+\newcommand{\ddotva}[1]
+{
+\ddot{\va{#1}}
+}
+
+%% Quick sin cos of theta and phi commands
+\newcommand{\cost}
+{
+\cos(\theta)
+}
+\newcommand{\sint}
+{
+\sin(\theta)
+}
+\newcommand{\coscost}
+{
+\cos[2](\theta)
+}
+\newcommand{\sinsint}
+{
+\sin[2](\theta)
+}
+\newcommand{\cosp}
+{
+\cos(\phi)
+}
+\newcommand{\sinp}
+{
+\sin(\phi)
+}
+
+%% Quick sin cos of omega t
+\newcommand{\coswt}
+{
+\cos(\omega t)
+}
+\newcommand{\sinwt}
+{
+\sin(\omega t)
+}
+\newcommand{\coscoswt}
+{
+\cos^2(\omega t)
+}
+\newcommand{\sinsinwt}
+{
+\sin^2(\omega t)
+}
+
+\title{FYS3120 Classical Mechanics and Electrodynamics\\ 
+\vspace{15mm}Problem set 7}
+\author{Jakob Borg}
+%%%%%%%
+\begin{document}
+%%%%%%%
+
+\maketitle
+
+%\lhead{Jakob Borg}
+\lhead{Problem set 7 FYS3120}
+\rhead{Jakobbor}
+%%%%%%%%
+
+%%%%%%%%
+\begin{exercise}
+\begin{itemize}
+\item[\bf a)] Below we have four equations that involve tensors of different ranks. Clearly the consistency rules for covariant equations are not satisfied in all places. Show where there are errors in each equation, and show how the equations can be modified to bring them to correct covariant form (there will be multiple alternative solutions but we prefer the simple ones).
+\begin{equation}
+C^{\mu}=T^{\mu}_{\;\;\nu}\, A^{\mu}\,,\quad D_{\nu}=T^{\mu}_{\;\;\nu} \,A_{\mu}\,,\quad
+E_{\mu\nu\rho}=T_{\mu\nu}\,S^{\nu}_{\;\;\rho}\,,\quad G=S_{\mu\nu}\,T^{\nu}_{\;\;\alpha}\, A^{\alpha}.
+\end{equation}
+\begin{solution}[\bf 1.a]
+For the equations to be on covariant form they need to obey the rules under Einstein's summation convention.
+\begin{align*}
+C^\mu &= T\indices{^\mu_\nu} A^\mu & \Rightarrow C^\mu &= T\indices{^\mu_\nu} A^\nu
+\end{align*}
+is wrong as the repeated index $\mu$ should be summed over but both appear upstairs on the right hand side. In addition we have only one $\nu$ and three $\mu$. I fix it by renaming the index on A to $\nu$.
+\begin{align*}
+D_\nu &= T\indices{^\mu_\nu} A_\mu & & &
+\end{align*}
+is on correct form, where $A_\mu$ and $D_\nu$ are contravariant tensors.
+\begin{align*}
+E\indices{_\mu_\nu_\rho} &= T\indices{_\mu_\nu}S\indices{^\nu_\mu} & \Rightarrow E\indices{_\mu_\rho} &= T\indices{_\mu_\nu}S\indices{^\nu_\mu} 
+\end{align*}
+is wrong as the left hand side is a rank-3 tensor while the result of the contraction on the right is a rank-2 tensor as $\nu$ is summed over.
+\begin{align*}
+G &= S\indices{_\mu_\nu}T\indices{^\nu_\alpha} A^\alpha & \Rightarrow \begin{cases}
+G_\mu &= S\indices{_\mu_\nu}T\indices{^\nu_\alpha} A^\alpha 
+\\
+G &= S\indices{_\nu}T\indices{^\nu_\alpha} A^\alpha
+\end{cases}
+\end{align*}
+is wrong where I assume $G$ is meant as a rank-0 tensor (a scalar). I've included two answers where I've removed one $\mu$ of $S$ or added one to the $G$ to balance the equations to proper covariant form.
+\end{solution}
+
+\item[\bf b)] Assume $A^\mu$ and $B^\mu$  to be four-vectors and $T^{\mu\nu}$ to be a rank-2 tensor. Show that by making products of these and by lowering and contracting indices, one can form several new four-vectors and scalars.
+\begin{solution}[\bf 1.b]
+I find this question a bit difficult to interpret, but I will do the following: If one takes care to follow the proper index conventions a four-vector or scalar formed from only four-vectors and invariant quantities will transform as it should under Lorentz transformations, thus being a proper four-vector.
+I will use the given four-vectors and tensor to produce a new four-vector and show that this transform under Lorentz transformation as required, but only for one example as it is quite time consuming and, as mentioned, is taken care of by the index convention
+\begin{align*}
+\qq*{four-vector:} G^\mu &= g\indices{_\nu_\sigma}T\indices{^\mu^\sigma}A^\nu = T\indices{^\mu_\nu} A^\nu %\qq{using} g\indices{_\mu_\nu} \qq{to lower the index
+\\
+G^\mu \rightarrow G\indices{^'^\mu} &= L\indices{^\mu_\nu}G^\nu %\qq{which transforms appropriately}
+\\
+\qq*{have to test how} g\indices{_\nu_\sigma}T\indices{^\mu^\sigma}A^\nu &\rightarrow g\indices{^'_\nu_\sigma}T\indices{^'^\mu^\sigma}A\indices{^'^\nu}
+\end{align*}
+Here I can transform each component separately and put them together at the end, but I have to mind the indices:
+\begin{align*}
+g\indices{_\nu_\sigma} \rightarrow g\indices{^'_\nu_\sigma} &= L\indices{^\mu_\nu}L\indices{^\xi_\sigma} g\indices{_\mu_\xi}
+\\
+T\indices{^\mu^\sigma} \rightarrow T\indices{^'^\mu^\nu}&= L\indices{^\mu_\rho}L\indices{^\sigma_\lambda}T\indices{^\rho^\lambda}
+\\
+A\indices{^'^\nu} &= L\indices{^\nu_\omega}A^\omega
+\\
+\qq*{so:} g\indices{^'_\nu_\sigma}T\indices{^'^\mu^\sigma}A\indices{^'^\nu} &= \underbrace{L\indices{^\mu_\nu}L\indices{^\xi_\sigma} g\indices{_\mu_\xi}}_{=g\indices{_\nu_\sigma}} L\indices{^\mu_\rho}L\indices{^\sigma_\lambda}T\indices{^\rho^\lambda}L\indices{^\nu_\omega}A^\omega
+\\
+&= \underbrace{L\indices{^\sigma_\lambda}L\indices{^\nu_\omega}g\indices{_\nu_\sigma}}_{=g\indices{_\lambda_\omega}} L\indices{^\mu_\rho}T\indices{^\rho^\lambda}A^\omega
+\\
+&= L\indices{^\mu_\rho}g\indices{_\lambda_\omega}T\indices{^\rho^\lambda}A^\omega
+\end{align*}
+which transforms as expected, with $\rho$ as the summation index analog to $\nu$ in the original transformation of $G^\nu$. A few more examples of possible products:
+\begin{align*}
+F^\mu &= T\indices{^\mu^\nu}g\indices{_\sigma_\nu} B^\sigma = T\indices{^\mu^\nu} B_\nu & S_\mu &= g\indices{_\mu_\rho}T\indices{^\rho^\nu}g\indices{_\lambda_\nu}B^\lambda = T\indices{_\mu^\nu}B_\nu
+\\
+H_\mu &= g\indices{_\mu_\rho}g\indices{_\sigma_\lambda}T\indices{^\rho^\lambda}A^\sigma = T\indices{_\mu_\sigma}A^\sigma & C &= A^\nu g\indices{_\nu_\mu}B^\mu = A^\nu B_\nu
+\end{align*}
+\end{solution}
+ 
+\item[\bf c)] We have defined the following four tensor fields as functions of the space-time coordinates $x=(x^0,x^1,x^2,x^3)$,
+\begin{equation}
+f(x) =x_{\mu}x^{\mu}\,,\quad g^{\mu}(x) =x^{\mu}\,,\quad b^{\mu\nu}(x) =x^{\mu}x^{\nu}\,,\quad h^{\mu} (x) =\frac{x^{\mu}}{x_{\nu}x^{\nu}}.
+\end{equation}
+Calculate the following derivatives, 
+\begin{equation}
+\partial_{\mu} f(x)\,,\quad \partial_{\mu}g^{\mu}(x)\,,\quad \partial_{\mu} b^{\mu\nu}(x)\,,\quad \partial_{\mu} h^{\mu} (x),
+\end{equation}
+where the differential operator $\partial_{\mu}$ is defined by
+\begin{equation}
+\partial_{\mu}\equiv \frac{\partial}{\partial x^\mu}.
+\end{equation}
+{\it Hint:} If you are uncertain about results for tensors, a convenient way to check these is always to specify the index values explicitly, {\it e.g.}, in the first case, by choosing $\mu=1$, which gives $\partial_{\mu}=\frac{\partial}{\partial x}$, and writing $f(x)=(ct)^2-(x^2+y^2+z^2)$.
+\end{itemize}
+\begin{solution}[\bf 1.c]
+\begin{align*}
+\partial_\nu f(x) &=\partial_\nu x_\mu x^\mu = x_\mu \partial_\nu x^\mu + x^\mu \partial_\nu x_\mu = x_\mu \partial_\nu x^\mu + x^\mu g\indices{_\mu_\rho} \partial_\nu x^\rho
+\\
+&= x_\mu \delta_\nu^\mu + x^\mu g\indices{_\mu_\rho} \delta_\nu^\rho = x_\mu \delta_\nu^\mu + x_\rho \delta_\nu^\rho = 2x_\mu
+\\
+\\
+\partial_\mu g^\mu(x) &= \partial_\mu x^\mu = \delta_\mu^\mu = 4
+\\
+\\
+\partial_\mu b\indices{^\mu^\nu}(x) &= \partial_\mu x^\mu x^\nu = x^\mu \partial_\mu x^\nu + x^\nu \partial_\mu x^\mu = x^\mu \delta_\mu^\nu + x^\nu 4= 5x^\nu
+\\
+\\
+\partial_\mu h^\mu(x) &= \frac{x_\nu x^\nu \partial_\mu x^\mu - x^\mu \partial_\mu \qty(x_\nu x^\nu)}{\qty(x_\nu x^\nu)^2} = \frac{4 x_\nu x^\nu- x^\mu \qty[ x_\nu \delta_\mu^\nu + x_\rho \delta_\mu^\rho ]}{\qty(x_\nu x^\nu)^2}
+\\
+& \qwhere x^\mu x_\nu \delta_\mu^\nu = x^\nu x_\nu \qc x^\mu x_\rho \delta_\mu^\rho = x^\rho x_\rho = x^\nu x_\nu
+\\
+&= \frac{4 x_\nu x^\nu- 2 x^\nu x_\nu}{\qty(x_\nu x^\nu)^2} = \frac{2}{\qty(x_\nu x^\nu)^2}
+\end{align*}
+further simplification may be done in the denominator of the last expression by performing the contraction $x_\nu x^\nu = x^2$, but I find this representation to be dangerous
+\[
+\partial_\mu h^\mu (x) = \frac{2}{\qty(x^2)^2}
+\]
+where I don't express it as $x^4$ for clarity.
+\end{solution}
+\end{exercise}
+
+
+%%%%%%%%%%
+\begin{exercise}[Modified version of final-exam question in 2006]\\
+An electron, with charge $e$, moves in a constant electric field $\vec E$. The motion is determined by the relativistic Newton's equation
+\begin{equation}
+\frac{d}{dt} \vec p = e \vec E,
+\end{equation}
+where $\vec p$ denotes the relativistic momentum $\vec p=m_e\gamma \vec v$, with $m_e$ as the electron rest mass, $\vec v$ as the velocity and $\gamma=1/\sqrt{1-(v/c)^2}$ as the relativistic gamma factor. We assume the electron to move along the field lines, that is, there is no velocity component orthogonal to $\vec E$. {\it Hint:} We remind you that the relativistic energy can be written
+\begin{equation}
+E = \gamma m_e c^2= \sqrt{p^2c^2+m_e^2c^4}.
+\end{equation}
+
+\begin{itemize}
+\item[\bf a)] Show that if $v=0$ at time $t=0$, then $\gamma$ depends on time $t$ as 
+\begin{equation}
+\gamma=\sqrt{1+\kappa^2 t^2},
+\end{equation}
+and determine $\kappa$.
+\begin{solution}[\bf 2.1]
+As there are no velocity component orthogonal to the field lines, $\va{p} \cdot \va{E}_{field} = 0$, and I can view equation (5) as a scalar equation 
+\begin{equation}
+\dv{t} p = eE_{field} \label{eq:no_vev_motion}
+\end{equation}
+Solving the relativistic energy for $p$ I find
+\begin{align*}
+E &= \sqrt{p^2c^2+m^2c^4} \qq{gives} p = mc\sqrt{\gamma^2-1}
+\end{align*}
+rewrite \cref{eq:no_vev_motion}
+\begin{align*}
+\dv{p}{t} &= \dv{\gamma}{t} \dv{p}{\gamma} = eE_{field} \qwhere \dv{p}{\gamma} = \frac{mc\gamma}{\sqrt{\gamma^2-1}}
+\\
+&=\dv{\gamma}{t} \frac{mc\gamma}{\sqrt{\gamma^2-1}} = eE_{field}
+\end{align*}
+so I find
+\begin{align*}
+\dd{\gamma}\frac{\gamma}{\sqrt{\gamma^2-1}} &= \dd{t} \frac{eE_{field}}{mc} \qq{int. both sides with limits} 
+\begin{aligned}
+\gamma(v(t=0)) &= 1 \\ \gamma(v(t)) &= \gamma
+\end{aligned}
+\\
+\int_1^\gamma \dd{\gamma}\frac{\gamma}{\sqrt{\gamma^2-1}}  &= \sqrt{\gamma^2-1}
+\\
+\sqrt{\gamma^2-1} &= \int_0^t \dd{t} \frac{eE_{field}}{mc} = \frac{eE_{field}}{mc}t \qlet \kappa = \frac{eE_{field}}{mc}
+\\
+\qq*{resulting in} \gamma &= \sqrt{1+\kappa^2t^2}
+\end{align*}
+as I wanted to show, with $\kappa = \frac{eE_{field}}{mc}$.
+\end{solution}
+
+\item[\bf b)] The proper time $\tau$ is related to the coordinate time $t$ by the formula $\frac{dt}{d\tau}=\gamma$. Show that if we write $\gamma=\cosh{\kappa \tau}$ then $\tau$ satisfies this above condition. 
+\begin{solution}[\bf 2.b]
+If I write $\gamma = \cosh(\kappa\tau)$ and use the chain rule I find
+\begin{align*}
+\dv{t}{\tau} = \dv{\gamma}{\tau}\dv{t}{\gamma} &= \gamma \qwhere
+\begin{aligned}
+\dv{t}{\gamma} &= \frac{\gamma}{\kappa\sqrt{\gamma^2-1}} \qq{from \textbf{a)}} 
+\\
+\dv{\gamma}{\tau} &= \kappa\sinh(\kappa\tau)
+\end{aligned} 
+\\
+\Rightarrow \sinh(\kappa\tau) \frac{\gamma}{\sqrt{\gamma^2-1}} &= \gamma \qq{inserting in root the definition} \gamma = \cosh(\kappa\tau)
+\\
+\sinh(\kappa\tau) \frac{\gamma}{\sqrt{\cosh^2(\kappa\tau)-1}} &= \sinh(\kappa\tau)\frac{\gamma}{\sinh(\kappa\tau)} = \gamma \qquad \Rightarrow \gamma = \gamma
+\end{align*}
+where I used the identity $\sinh(x) = \pm \sqrt{\cosh^2(x)-1}$
+\end{solution}
+
+\item[\bf c)] For linear motion we have the following relation between the proper acceleration $a_0$ and the acceleration $a$ measured in a fixed inertial reference frame, $a_0=\gamma^3 a$. Use this to show that the electron has a constant proper acceleration, given by $\vec a_0= e\vec E/m_e$.
+{\it Hint:} You will need to find the time-derivative of $\gamma$. (A look in the lecture notes might be helpful.)
+\begin{solution}[\bf 2.c]
+I start from equation (5) to find the acceleration from an observers reference frame
+\begin{align*}
+\dv{\va{p}}{t} = e\va{E} &= \dv{t}m\gamma\va{v} = m\va{v}\dv{\gamma}{t} + m\gamma\dv{\va{v}}{t} = m\gamma \va{a} + m\va{v} \dv{\gamma}{t}
+\\
+\va{a} &= \frac{e\va{E}}{\gamma m}-\frac{\va{v}}{\gamma}\dv{\gamma}{t} \qwhere \dv{\gamma}{t} = \gamma^3\frac{1}{c^2}\va{v}\cdot\va{a}
+\end{align*}
+and use the relation between proper acceleration for linear motion to get
+\begin{align*}
+\frac{\va{a}_0}{\gamma^3} &= \frac{e\va{E}}{\gamma m}-\frac{\va{v}}{\gamma}\gamma^3\frac{1}{c^2}\va{v}\cdot\frac{\va{a}_0}{\gamma^3}
+\\
+\frac{\va{a}_0}{\gamma^2} + \frac{\va{v}^2}{c^2}\va{a}_0 &= \frac{e\va{E}}{m} \qq{here I use} \frac{1}{\gamma^2} = 1-\frac{\va{v}^2}{c^2}
+\\
+\va{a}_0 \qty(1-\frac{\va{v}^2}{c^2}) + \va{a}_0\frac{\va{v}^2}{c^2} = \va{a}_0 &= \frac{e\va{E}}{m}
+\end{align*}
+as I wanted to show.
+\end{solution}
+
+\item[\bf d)] Find explicit expressions for the four-velocity $U^{\mu}$ and the four-acceleration $A^{\mu}$ as functions of the proper time $\tau$ and show from these that we get the expected $A^{\mu}A_{\mu}=-a_0^2$. (For simplicity you may assume the motion to be in the $x$-direction.) As a reminder we also give the following functional relations:
+\begin{equation}
+\cosh^2x-\sinh^2x=1\,,\quad
+\frac{d}{dx}\cosh x=\sinh x\,,\quad\frac{d}{dx}\sinh x=\cosh x.
+\end{equation}
+\end{itemize}
+\begin{solution}[\bf 2.d]
+First I find the four-velocity given as $U^\mu = \gamma\qty(c,v_x,0,0)$, assuming motion in x-direction. I need to express $v$ as a function of $\tau$:
+\begin{align*}
+\gamma = \cosh(\kappa\tau) &= \frac{1}{\sqrt{1-\frac{v^2}{c^2}}} \quad \Rightarrow \frac{v^2}{c^2} = 1-\frac{1}{\cosh^2(\kappa\tau)}
+\\
+\frac{v^2}{c^2} &= \frac{1}{\cosh^2(\kappa\tau)} \qty(\cosh^2(\kappa\tau) -1) = \tanh^2(\kappa\tau)
+\\
+v &= c\tanh(\kappa\tau)
+\end{align*}
+giving the four-velocity
+\begin{align*}
+U^\mu &= c\cosh(\kappa\tau)\qty(1,\,\tanh(\kappa\tau),\,0,\,0)
+\\
+\qq*{or} &= \qty(c\cosh(\kappa\tau),\,c\sinh(\kappa\tau),\,0,\,0)
+\end{align*}
+To find the four-acceleration I take the proper time derivative
+\begin{align*}
+A^\mu &= \dv{U^\mu}{\tau} = \dv{\tau} \qty(c\cosh(\kappa\tau),\, \sinh(\kappa\tau),\,0,\,0)
+\\
+&= \qty(c\kappa\sinh(\kappa\tau),\, c\kappa\cosh(\kappa\tau),\,0,\,0).
+\end{align*}
+With this four-acceleration I check
+\begin{align*}
+A^\mu A_\mu &= c^2\kappa^2\sinh^2(\kappa\tau) - c^2\kappa^2\cosh^2(\kappa\tau) = c^2\kappa^2\qty(\sinh^2(\kappa\tau)-\cosh^2(\kappa\tau))
+\\
+&= -c^2\kappa^2 \qwhere \kappa^2 = \frac{e^2E^2}{m^2c^2}
+\\
+&= -\frac{e^2E^2}{m^2} = -a_0^2
+\end{align*}
+as expected.
+\end{solution}
+\end{exercise}
+
+
+%%%%%%%%
+ \end{document}
+ %%%%%%%%
+
+
