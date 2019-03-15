@@ -63,3 +63,5 @@ docs/_build/
 target/
 
 problem_sets/problem_set_5/Brachistochrone\.eps
+
+*.eps
